@@ -10,10 +10,10 @@
         <i class="nc-icon nc-app"></i> <span>Master</span>
       </a>
         <div class="dropdown-menu" style="width: 75%;" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="{{ url('master/dataSiswa') }}">{{ __("Data Siswa") }}</a>
-              <a class="dropdown-item" href="{{ url('master/dataGuru') }}">{{ __("Data Guru") }}</a>
-              <a class="dropdown-item" href="{{ url('master/dataKelas') }}">{{ __("Data Kelas") }}</a>
-              <a class="dropdown-item" href="{{ url('master/dataJurusan') }}">{{ __("Data Jurusan") }}</a>
+              <a class="dropdown-item" style="color:black" href="{{ route('students.index') }}">{{ __("Data Siswa") }}</a>
+              <a class="dropdown-item" style="color:black" href="{{ route('teachers.index') }}">{{ __("Data Guru") }}</a>
+              <a class="dropdown-item" style="color:black" href="{{ route('grades.index') }}">{{ __("Data Kelas") }}</a>
+              <a class="dropdown-item" style="color:black" href="{{ route('majors.index') }}">{{ __("Data Jurusan") }}</a>
         </div>
     </li>
     <li class="dropdown dropleft sidebar-item">
@@ -22,26 +22,26 @@
         <span>PKL</span>
       </a>
       <div class="dropdown-menu" style="width: 75%;" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="{{ url('pkl/dataInstansi') }}"><span> {{ __("Data Instansi") }}</span></a>
-              <a class="dropdown-item" href="{{ url('pkl/dataPeriode') }}"><span> {{ __("Data Periode") }} </span></a>
-              <a class="dropdown-item" href="{{ url('pkl/dataPengajuan') }}"><span> {{ __("Pengajuan PKL") }} </span></a>
-              <a class="dropdown-item" href="{{ url('pkl/dataPenempatan') }}"><span> {{ __("Data Penempatan") }} </span></a>
+              <a class="dropdown-item" style="color:black" href="{{ route('internship-places.index') }}"><span> {{ __("Data Instansi") }}</span></a>
+              <a class="dropdown-item" style="color:black" href="{{ route('periods.index') }}"><span> {{ __("Data Periode") }} </span></a>
+              <a class="dropdown-item" style="color:black" href="{{ route('internship-submissions.index') }}"><span> {{ __("Pengajuan PKL") }} </span></a>
+              <a class="dropdown-item" style="color:black" href="{{ route('internship-placements.index') }}"><span> {{ __("Data Penempatan") }} </span></a>
         </div>
     </li>
     <li>
-      <a href="{{ url('attendance/dataAttendance') }}">
+      <a href="{{ route('attendances.index') }}">
         <i class="nc-icon nc-touch-id"></i>
         <p>Attendance</p>
       </a>
     </li>
     <li>
-      <a href="{{ url('logbook/dataLogbook') }}">
+      <a href="{{ route('logbooks.index') }}">
         <i class="nc-icon nc-tile-56"></i>
         <p>Logbook</p>
       </a>
     </li>
     <li>
-      <a href="{{url('sertifikat/dataSertifikat')}}">
+      <a href="{{route('internship-certificates.index')}}">
         <i class="nc-icon nc-trophy"></i>
         <p>Sertifikat</p>
       </a>

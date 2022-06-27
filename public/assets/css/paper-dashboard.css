@@ -20,6 +20,9 @@ Licensed under the MIT license - http://opensource.org/licenses/MIT
 
 Copyright (c) 2015 Daniel Eden
 */
+.dropdown-menu .dropdown-item:hover{
+  background-color: royalblue;
+}
 .animated {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -496,7 +499,7 @@ Copyright (c) 2015 Daniel Eden
       box-shadow: none; }
 
 .btn-info {
-  background-color: #51bcda;
+  background-color: royalblue;
   color: #FFFFFF; }
   .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .btn-info:active:focus, .btn-info:active:hover, .btn-info.active:focus, .btn-info.active:hover,
   .show > .btn-info.dropdown-toggle,
@@ -3197,7 +3200,7 @@ License - nucleoapp.com/license/
     z-index: 3; }
   .sidebar[data-color="white"]:after,
   .off-canvas-sidebar[data-color="white"]:after {
-    background: #FFFFFF; }
+    background:royalblue }
   .sidebar[data-color="white"] .nav li a,
   .sidebar[data-color="white"] .nav li a i,
   .sidebar[data-color="white"] .nav li a[data-toggle="collapse"],
@@ -3210,8 +3213,8 @@ License - nucleoapp.com/license/
   .off-canvas-sidebar[data-color="white"] .nav li a[data-toggle="collapse"] i,
   .off-canvas-sidebar[data-color="white"] .nav li a[data-toggle="collapse"] ~ div > ul > li .sidebar-mini-icon,
   .off-canvas-sidebar[data-color="white"] .nav li a[data-toggle="collapse"] ~ div > ul > li > a {
-    color: #66615B;
-    opacity: .7; }
+    color: white;
+    opacity: .9; }
   .sidebar[data-color="white"] .nav li:hover:not(.active) > a,
   .sidebar[data-color="white"] .nav li:focus:not(.active) > a,
   .off-canvas-sidebar[data-color="white"] .nav li:hover:not(.active) > a,
@@ -3219,7 +3222,7 @@ License - nucleoapp.com/license/
     opacity: 1; }
   .sidebar[data-color="white"] .logo .simple-text,
   .off-canvas-sidebar[data-color="white"] .logo .simple-text {
-    color: #66615B; }
+    color: white; }
   .sidebar[data-color="white"] .logo:after,
   .off-canvas-sidebar[data-color="white"] .logo:after {
     background-color: #66615B;
@@ -3335,6 +3338,7 @@ License - nucleoapp.com/license/
 
 .off-canvas-sidebar .nav > li > a:focus {
   background: rgba(200, 200, 200, 0.2); }
+  /* background-color: #0c2646;} */
 
 .main-panel {
   position: relative;
