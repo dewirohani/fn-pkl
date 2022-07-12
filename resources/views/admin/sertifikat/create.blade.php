@@ -9,43 +9,38 @@
                         <h4 class="card-title"> Tambah Sertifikat</h4>
                     </div>
                     <div class="card-body">
+                        <form id="createSertifikat" enctype="multipart/form-data">
+                            @csrf
                             <div class="form-group">
                                 <label>Nama Siswa</label>
-                                <input type="text" class="form-control" name="nama_siswa" id="nama_siswa" placeholder="ex: Jhon">
+                                <select name="student_id" id="student_id" class="form-control student_id">
+                                    <option value="" disabled="true">Pilih Siswa</option>
+                                    @foreach ($students as $student)
+                                    <option value="{{ $student->id }}">{{ $student->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Guru Pembimbing</label>
-                                <select name="guru" id="guru" class="form-control guru">
-                                    <option value="0" disabled="true" selected="true"> Pilih Guru Pembimbing</option>
+                                 <select name="teacher_id" id="teacher_id" class="form-control teacher_id">
+                                    <option value="" disabled="true">Pilih Siswa</option>
+                                    @foreach ($teachers as $teacher)
+                                    <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Sertifikat</label>
-                                <input class="form-control" type="file" id="sertifikat">
-                              </div>
-                              <div class="form-group" hidden>
-                                <label>Path</label>
-                                <input type="text" class="form-control" name="path" id="path">
-                            </div>
-                                                       
+                                <input class="form-control" type="file" id="file" name="file">
+                              </div>                                               
                             <div class="form-group">
-                                <button class="btn btn-info" id="sbmbtn">Simpan</button>
+                                <button class="btn btn-info" id="submit" type="submit">Simpan</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <script>
-                $(document).ready(function(){
-                $("#input_file").change(function(){
-                //get file name
-                var the_file = document.getElemetById("input_gambar");
-                var file_name = the_file.files[0];
-                $("#span_file").html(file_name);
-	
-                    });
-                });
-            </script>
+           
     @include('admin.sertifikat.scriptcreatedata')
-    @include('admin.script.scriptgetguru')
+    {{-- @include('admin.script.scriptgetguru') --}}
         @endsection

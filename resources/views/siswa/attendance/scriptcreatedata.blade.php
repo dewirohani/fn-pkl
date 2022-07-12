@@ -1,28 +1,39 @@
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js')}}"></script>
 <script>
-$("#sbmbtn").click(function(){
+    function getCookie(name){
+        let cookie = {};
+        document.cookie.split(';').forEach(function(el)
+        {
+            let[k, v] = el.split('=');
+            cookie[k.trim()]=v;
+        })
+        
+        return cookie[name];
+    }
+</script>
+<script>
+$("#presensi").click(function(){
     var nama_siswa = $("#nama_siswa").val();
-    var tanggal = $("#tanggal").val();
-    var waktu = $("#waktu").val();
-    var lokasi = $("#lokasi").val();
-    var foto = $("#foto").val();
-    var signature = $("#signature").val();
+    // var waktu = $("#waktu").val();
+
+   
     var hasil = {
         student_id: nama_siswa,
-        date_of_absent: tanggal,
-        time_of_absent: waktu,
-        location: lokasi,
-        photo	: foto,
-        signature: signature,
+        // time_of_absent: waktu,
+       
     };
 
     $.ajax({
         type: 'POST',
-        url: 'http://127.0.0.1:8000/api/attendances',
+        url: 'http://localhost/pa/backend/public/api/attendances',
+        headers: {
+            'Accept':'*/*',
+            'Authorization':'Bearer '+ getCookie('token'),
+        	},
         data: JSON.stringify(hasil),
         contentType: 'application/json'
     }).then((result) => {
-        location.href = '/attendance';
+        location.href = '/attendances';
         Swal.fire({
             icon: 'success',
             title: "Tersimpan!",

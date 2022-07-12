@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DataTables;
 use Http;
 
 class InternshipPlacementController extends Controller
@@ -15,18 +16,48 @@ class InternshipPlacementController extends Controller
     public function index(Request $request)
     {
         $data = Http::withHeaders([
-            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6',strpos(substr($request->Header('cookie'),'6'), ";")),
-            'ContentType' => 'application/json', 
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/internship-placements')->json();            
-            $internship_placements = json_decode(json_encode($data));
-            // dd($majors);
+            ])->get('http://localhost/pa/backend/public/api'.'/internship-placements')->json();
+            
+            $internshipPlacements = json_decode(json_encode($data))->internshipPlacements;
+        if($request->ajax()){
+            return DataTables::of($internshipPlacements)
+                            ->addColumn('internship_submission_id', function($row){
+                                return $row->internship_submission_id;
+                            })
+                            ->addColumn('student_id', function($row){
+                                return $row->student->name;
+                            })
+                            ->addColumn('teacher_id', function($row){
+                                return $row->teacher->name;
+                            })
+                            ->addColumn('grade_id', function($row){
+                                return $row->grade->name;
+                            })
+                            ->addColumn('major_id', function($row){
+                                return $row->major->name;
+                            })
+                            ->addColumn('period_id', function($row){
+                                return $row->period->nama_periode;
+                            })
+                            ->addColumn('internship_place_id', function($row){
+                                return $row->internship_place->name;
+                            })
+                            ->addColumn('action', function($row){
 
-            $i = 1;
-
-        return view('admin.pkl.penempatan.index', compact(
-            'internship_placements', 'i', 
-        ));
+                                // $btn = '<a href="javascript:void(0)" data-toggle="tooltip" onclick="updateItem(this)" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm"><span><i class="fas fa-eye"></i></span></a>';
+                                $btn = '<a href="'.route('internship-placements.edit', $row->id).'" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-warning btn-sm"><span><i class="fas fa-pen-square"></i></span></a>';
+                                $btn .='&nbsp';
+                                $btn .= '<a href="javascript:void(0)" data-toggle="tooltip" onclick="deleteItem(this)" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm"><span><i class="fas fa-trash"></i></a>';
+                                 return $btn;
+                            })
+                            ->rawColumns(['action'])
+                            ->addIndexColumn()
+                            ->make(true);
+            }
+            return view('admin.pkl.penempatan.index', compact('internshipPlacements'));
         // return view('admin.pkl.penempatan.index');
     }
 

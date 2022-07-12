@@ -1,53 +1,72 @@
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js')}}"></script>
 <script>
-    function getCookie(name){
-        let cookie = {};
-        document.cookie.split(';').forEach(function(el)
-        {
-            let[k, v] = el.split('=');
-            cookie[k.trim()]=v;
-        })
-        
-        return cookie[name];
-    }
-</script>
-        <script>
-            function deleteData(e)
-                {
-                    let id = e.getAttribute('data-id');
-                    Swal.fire({
-                icon: 'error',
-                title: 'Hapus Data!',
-                text: "Apakah anda yakin ingin menghapus data ini??",
-                showConfirmButton: true,
-                showCancelButton: true
+    function deleteItem(e) {
+        let id = e.getAttribute('data-id');
+        Swal.fire({
+            title: 'Kamu yakin ?',
+            text: "ingin menghapus data pengajuan ini ?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Hapus!'
             }).then((result) => {
-                if(result.isConfirmed){
-                    $.ajax({
-                            type: "POST",
-                            url: "http://localhost/pa/backend/public/api/submissions/"+id,
-                            data: {"_method": "DELETE"},
-                            headers: {
-                            'Accept':'*/*',
-                            'Authorization':'Bearer '+ getCookie('token'),
-                        },
-                        }).then((result) => {
-                            location.reload();
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: "http://localhost/pa/backend/public/api/submissions/"+id,
+                    headers: {
+                        'Accept':'*/*',
+                        'Authorization':'Bearer '+ getCookie('token'),
+                    },
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "_method": "DELETE",
+                    },
+                    dataType: 'JSON',
+                    success: function(response) {
+                        // console.log(response);
                             Swal.fire({
                                 icon: 'success',
-                                title: "Deleted!",
-                                text: "Data berhasil di hapus",
-                                showConfirmButton: true,
-                            });
-                        });
-                }else if(result.isDenied){
-                    Swal.fire({
-                        icon: 'error',
-                        title: "Cancelled",
-                        text: "Menghapus data dibatalkan :)",
+                                title: response.message,
+                                showConfirmButton: false,
+                                timer: 1250,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                },
+                                toast: true,
+                                position: 'top-right'
+                            }).then((result) => {
+                                // Reload the Page
+                                location.reload();
+                            })
+                            $("#" + id + "").remove(); // you can add name div to remove
+                        },
+                    error: function(response){   
+                        // console.log(response.responseJSON);                     
+                            Swal.fire({
+                                icon: 'error',
+                                title: response.responseJSON.message,
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                },
+                                toast: true,
+                                position: 'top-right'
+                            }).then((result) => {
+                                // Reload the Page
+                                // location.reload();
+                            })
+                            $("#" + id + "").remove();
+                    }
                     });
                 }
-            });
-        }
+            })
 
-        </script>
+        };
+</script>

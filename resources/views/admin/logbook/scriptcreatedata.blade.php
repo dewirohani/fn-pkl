@@ -1,5 +1,17 @@
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js')}}"></script>
 <script>
+    function getCookie(name){
+        let cookie = {};
+        document.cookie.split(';').forEach(function(el)
+        {
+            let[k, v] = el.split('=');
+            cookie[k.trim()]=v;
+        })
+        
+        return cookie[name];
+    }
+</script>
+<script>
 $("#sbmbtn").click(function(){
     var nama_siswa = $("#nama_siswa").val();
     var guru = $("#guru").val();
@@ -19,6 +31,10 @@ $("#sbmbtn").click(function(){
     $.ajax({
         type: 'POST',
         url: 'http://localhost/pa/backend/public/api/logbooks',
+        headers: {
+            'Accept':'*/*',
+            'Authorization':'Bearer '+ getCookie('token'),
+        	},
         data: JSON.stringify(hasil),
         contentType: 'application/json'
     }).then((result) => {

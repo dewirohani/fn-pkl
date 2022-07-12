@@ -7,40 +7,28 @@
                     <div class="card-header">
                         <h4 class="card-title"> Edit Pengajuan</h4>
                     </div>
-                    <div class="card-body">                    
+                    <div class="card-body">     
+                        <form id="editPengajuan" enctype="multipart/form-data">
+                            @csrf                               
+                            @method('PUT')                        
+                            <input type="text" id="id" hidden value="{{$submission->id}}">             
                             <div class="form-group">
-                                <label>Nama Siswa</label>
-                                <input type="text" class="form-control" disabled name="nama_siswa" id="nama_siswa" >
-                            </div>                                                    
-                            <div class="form-group">
-                                <label>Kelas</label>
-                                <input type="text" class="form-control" disabled name="kelas" id="kelas" >
-                            </div>
-                            <div class="form-group">
-                                <label>Jurusan</label>
-                                <input type="text" class="form-control" disabled name="jurusan" id="jurusan" >
-                            </div> 
-                            <div class="form-group">
-                                <label>Periode</label>
-                                <input type="text" class="form-control" disabled name="periode" id="periode" >   
-                            </div>
-                            <div class="form-group">
-                                <label>Du/Di</label>
-                                <select name="du_di" id="du_di" class="form-control du_di">
-                                    <option value="0" disabled="true" selected="true">Pilih Du/Di</option>
+                                <label>Status</label>
+                                <select name="status_id" id="status_id" class="form-control status_id">
+                                    <option value="" disabled="true">Pilih Status</option>
+                                    @foreach ($internshipSubmissionStatus as $status)
+                                    <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                    @endforeach
                                 </select>
-                            </div>
-                                               
+                            </div>                            
+                                             
                             <div class="form-group">
-                                <button class="btn btn-info" id="sbmbtn">Simpan</button>                                
-                            </div>                        
+                                <button class="btn btn-info" id="submit" type="submit">Simpan</button>                                
+                            </div>
+                        </form>                      
                     </div>
                 </div>
             </div>
             @include('admin.pkl.pengajuan.scripteditdata')
-            @include('admin.script.scriptgetjurusan')
-            @include('admin.script.scriptgetkelas')
-            @include('admin.script.scriptgetperiode')
-            @include('admin.script.scriptgetinstansi')
-            @include('admin.script.scriptgetguru')
+ 
         @endsection

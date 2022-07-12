@@ -1,5 +1,5 @@
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js')}}"></script>
-<script>
+{{-- <script>
     function getCookie(name){
         let cookie = {};
         document.cookie.split(';').forEach(function(el)
@@ -10,35 +10,61 @@
         
         return cookie[name];
     }
-</script>
+</script> --}}
 <script>
-
-$("#sbmbtn").click(function( e){
-    var jurusan = $("#jurusan").val();
-    var deskripsi = $("#deskripsi").val();
-    var hasil = {
-        name: jurusan,
-        description: deskripsi
-    };
-
-    $.ajax({
-        type: 'POST',
-        url: 'http://localhost/pa/backend/public/api/majors',
-        headers: {
-            'Accept':'*/*',
-            'Authorization':'Bearer '+ getCookie('token'),
-        },
-        data: JSON.stringify(hasil),
-        contentType: 'application/json'
-    }).then((result) => {
-        location.href = '/majors';
-        Swal.fire({
-            icon: 'success',
-            title: "Tersimpan!",
-            text: "Data berhasil di Simpan",
-            showConfirmButton: true,
-        });
+    $(document).ready(function () {
+    $("#createJurusan").on('submit', function(event){
+        
+        event.preventDefault();
+        let formData = new FormData(this);
+                $.ajax({
+                    url: "http://localhost/pa/backend/public/api/majors",
+                    type: "POST",
+                    headers: {
+                        'Accept':'*/*',
+                        'Authorization':'Bearer '+ getCookie('token'),
+                    },
+                    data: formData, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                            // console.log(response);
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: response.message,
+                                    toast: true,
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    },
+                                    position: 'top-right'
+                                }).then((result) => {
+                                    // Reload the Page
+                                    location.href = '/majors';
+                                })
+                            },
+                    error: function(response, error){   
+                        // var err = eval("(" + xhr.response.message")");
+                        // console.log(response.responseJSON);                     
+                            swal.fire({
+                                icon: 'error',
+                                title: response.responseJSON.message,
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                },
+                                toast: true,
+                                position: 'top-right'
+                            })
+                    }
+                });
+            });
     });
-});
-
-</script>
+    </script>

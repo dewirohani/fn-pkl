@@ -7,30 +7,33 @@
                     <div class="card-header">
                         <h4 class="card-title "> Tambah Periode</h4>
                     </div>
-                    <div class="card-body">                   
+                    <div class="card-body">   
+                        <form id="createPeriode">           
                             <div class="form-group ">
                                 <label>Nama Periode</label>
                                 <input type="text" class="form-control" name="nama_periode" id="nama_periode" placeholder="Nama Periode">
                             </div>                                                    
                             <div class="form-group">
                                 <label>Tanggal Mulai</label>
-                                <input type="date" class="form-control" name="tanggal_mulai" id="tanggal_mulai" placeholder="Tanggal Mulai">
+                                <input type="date" class="form-control" name="start_date" id="start_date" placeholder="Tanggal Mulai">
                             </div>
                             <div class="form-group">
                                 <label>Tanggal Berakhir</label>
-                                <input type="date" class="form-control" name="tanggal_berakhir" id="tanggal_berakhir" placeholder="Tanggal Berakhir">
+                                <input type="date" class="form-control" name="end_date" id="end_date" placeholder="Tanggal Berakhir">
                             </div> 
                             <div class="form-group">
                                 <label>Status</label>
-                                <select class="form-control" id="status">
-                                    <option value="0" disabled="true" selected="true">Status</option>
-                                    <option value="Aktif">Aktif</option>
-                                    <option value="Tidak Aktif">Tidak Aktif</option>                                
-                                  </select>
+                                <select name="status_id" id="status_id" class="form-control status_id">
+                                    <option value="" disabled="true">Pilih Status</option>
+                                    @foreach ($periodStatuses as $period)
+                                    <option value="{{ $period->id }}">{{ $period->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>                             
                             <div class="form-group">
-                                <button class="btn btn-info" id="sbmbtn">Simpan</button>                                
+                                <button class="btn btn-info" id="submit" type="submit">Simpan</button>                                
                             </div>
+                        </form>     
                     </div>
                 </div>
             </div>

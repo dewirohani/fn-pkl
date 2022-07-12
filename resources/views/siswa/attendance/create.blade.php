@@ -10,21 +10,20 @@
                     <div class="card-body">                      
                             <div class="form-group ">
                                 <label>Nama Siswa</label>
-                                <input type="text" class="form-control" name="nama_siswa" id="nama_siswa" placeholder="ex: Jhon">
+                                <input type="text" class="form-control" disabled name="nama_siswa" id="nama_siswa" placeholder="ex: Jhon">
                             </div>                                                    
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label>Tanggal</label>
                                 <input type="date" class="form-control" name="tanggal" id="tanggal">
-                            </div>
-                            <div class="form-group">
+                            </div> --}}
+                            <div class="form-group" hidden>
                                 <label>Waktu</label>
                                 <input type="time" class="form-control" name="waktu" id="waktu">
                             </div> 
                             <div class="form-group">
-                                <label>Lokasi</label>
-                                <input type="text" class="form-control" name="lokasi" id="lokasi" placeholder="ex: BAPEDDA">
-                            </div> 
-                            <div class="form-group">
+                                <button class="form-control" style="background-color:teal; color:white" name="presensi" id="presensi">PRESENSI</button>                        
+                            </div>
+                            {{-- <div class="form-group">
                                 <label>Foto</label>
                                 <form action="#" method="post" enctype="multipart/form-data">
                                     <br>
@@ -40,11 +39,11 @@
                                     <input type="file" name="fileToUpload" id="signature">
                                     <input type="submit" value="Upload Image" name="submit">
                                   </form>
-                            </div> 
+                            </div>  --}}
                                                 
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <button class="btn btn-info" id="sbmbtn">Simpan</button>                        
-                            </div>
+                            </div> --}}
                     </div>
                 </div>
             </div>

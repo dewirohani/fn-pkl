@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DataTables;
 use Http;
 
 class PeriodController extends Controller
@@ -15,18 +16,39 @@ class PeriodController extends Controller
     public function index(Request $request)
     {
         $data = Http::withHeaders([
-            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6',strpos(substr($request->Header('cookie'),'6'), ";")),
-            'ContentType' => 'application/json', 
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/periods')->json();            
-            $periods = json_decode(json_encode($data));
-            // dd($majors);
+            ])->get('http://localhost/pa/backend/public/api'.'/periods')->json();
+            $periods = json_decode(json_encode($data))->periods;
+            // dd($data);
+        if($request->ajax()){
+            return DataTables::of($periods)
+                            ->addColumn('nama_periode', function($row){
+                                return $row->nama_periode;
+                            })
+                            ->addColumn('start_date', function($row){
+                                return $row->start_date;
+                            })
+                            ->addColumn('end_date', function($row){
+                                return $row->end_date;
+                            })
+                            ->addColumn('status_id', function($row){
+                                return $row->period_statuses->name;
+                            })
+                            ->addColumn('action', function($row){
 
-            $i = 1;
+                                $btn = '<a href="'.route('periods.edit', $row->id).'" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-warning btn-sm"><span><i class="fas fa-pen-square"></i></span></a>';
+                                $btn .='&nbsp';
+                                $btn .= '<a href="javascript:void(0)" data-toggle="tooltip" onclick="deleteItem(this)" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm"><span><i class="fas fa-trash"></i></a>';
 
-        return view('admin.pkl.periode.index', compact(
-            'periods', 'i', 
-        ));
+                                 return $btn;
+                            })
+                            ->rawColumns(['action'])
+                            ->addIndexColumn()
+                            ->make(true);
+            }
+            return view('admin.pkl.periode.index', compact('periods'));
         // return view('admin.pkl.periode.index');
     }
 
@@ -35,9 +57,17 @@ class PeriodController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.pkl.periode.create');
+        $data = Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/period-statuses')->json();
+            // dd($data);   
+            $periodStatuses = json_decode(json_encode($data))->periodStatuses;
+        return view('admin.pkl.periode.create', compact('periodStatuses'));
+        
     }
 
     /**
@@ -57,9 +87,16 @@ class PeriodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show( Request $request, $id)
     {
-        //
+        // $data = Http::withHeaders([
+        //     'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+        //     'ContentType' => 'application/json',
+        //     'Accept' => 'application/json',
+        //     ])->get('http://localhost/pa/backend/public/api/period-statuses')->json();
+        //     // dd($data);   
+        //     $periodStatuses = json_decode(json_encode($data))->periodStatuses;
+        // return view('admin.pkl.periode.edit', compact('periodStatuses'));
     }
 
     /**
@@ -68,10 +105,25 @@ class PeriodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        $data = Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/periods/'.$id.'/edit')->json();
+            $period = json_decode(json_encode($data))->period;
+            // dd($period);
+            $dataStatuses = Http::withHeaders([
+                'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+                'ContentType' => 'application/json',
+                'Accept' => 'application/json',
+                ])->get('http://localhost/pa/backend/public/api/period-statuses')->json();
+                // dd($data);
+                $periodStatuses = json_decode(json_encode($dataStatuses))->periodStatuses;
+        
         return view('admin.pkl.periode.edit', compact(
-            'id'
+            'period','periodStatuses'
         ));
     }
 

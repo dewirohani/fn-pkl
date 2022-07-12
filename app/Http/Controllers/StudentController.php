@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use DataTables;
 use Http;
 
 use Illuminate\Http\Request;
@@ -15,18 +16,59 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $data = Http::withHeaders([
-            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6',strpos(substr($request->Header('cookie'),'6'), ";")),
-            'ContentType' => 'application/json', 
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/students')->json();            
-            $students = json_decode(json_encode($data));
-            // dd($majors);
+            ])->get('http://localhost/pa/backend/public/api'.'/students')->json();
+            $students = json_decode(json_encode($data))->students;
+        if($request->ajax()){
+            return DataTables::of($students)
+                            ->addColumn('nis', function($row){
+                                return $row->nis;
+                            })
+                            ->addColumn('name', function($row){
+                                return $row->name;
+                            })
+                            ->addColumn('grade_id', function($row){
+                                return $row->grade->name;
+                            })
+                            ->addColumn('major_id', function($row){
+                                return $row->major->name;
+                            })
+                            ->addColumn('address', function($row){
+                                return $row->address;
+                            })
+                            ->addColumn('place_of_birth', function($row){
+                                return $row->place_of_birth;
+                            })
+                            ->addColumn('date_of_birth', function($row){
+                                return $row->date_of_birth;
+                            })
+                            ->addColumn('gender', function($row){
+                                return $row->gender;
+                            })
+                            ->addColumn('religion', function($row){
+                                return $row->religion;
+                            })
+                            ->addColumn('phone', function($row){
+                                return $row->phone;
+                            })
+                            ->addColumn('year_of_entry', function($row){
+                                return $row->year_of_entry;
+                            })
+                            ->addColumn('action', function($row){
 
-            $i = 1;
+                                $btn = '<a href="'.route('students.edit', $row->id).'" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-warning btn-sm"><span><i class="fas fa-pen-square"></i></span></a>';
+                                $btn .='&nbsp';
+                                $btn .= '<a href="javascript:void(0)" data-toggle="tooltip" onclick="deleteItem(this)" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm"><span><i class="fas fa-trash"></i></a>';
 
-        return view('admin.master.siswa.index', compact(
-            'students', 'i', 
-        ));
+                                 return $btn;
+                            })
+                            ->rawColumns(['action'])
+                            ->addIndexColumn()
+                            ->make(true);
+            }
+            return view('admin.master.siswa.index', compact('students'));
 
         // return view('admin.master.siswa.index');
     }
@@ -36,9 +78,15 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.master.siswa.create');
+        $data = Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/grades')->json();
+            $grades = json_decode(json_encode($data))->grades;
+        return view('admin.master.siswa.create', compact('grades'));
     }
 
     /**
@@ -69,10 +117,18 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        $data = Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/students/'.$id.'/edit')->json();
+            $student = json_decode(json_encode($data))->student;
+            // dd($student);
+        
         return view('admin.master.siswa.edit', compact(
-            'id'
+            'major'
         ));
     }
 

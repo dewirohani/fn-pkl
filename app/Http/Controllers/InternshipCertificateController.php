@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DataTables;
 use Http;
 
 class InternshipCertificateController extends Controller
@@ -15,18 +16,39 @@ class InternshipCertificateController extends Controller
     public function index(Request $request)
     {
         $data = Http::withHeaders([
-            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6',strpos(substr($request->Header('cookie'),'6'), ";")),
-            'ContentType' => 'application/json', 
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/certificates')->json();            
-            $certificates = json_decode(json_encode($data));
-            // dd($majors);
+            ])->get('http://localhost/pa/backend/public/api'.'/certificates')->json();
+            // dd($data);
+            
+            $internship_certificate = json_decode(json_encode($data))->internship_certificate;
+        if($request->ajax()){
+            return DataTables::of($internship_certificate)
+                            ->addColumn('student_id', function($row){
+                                return $row->student->name;
+                            })
+                            ->addColumn('teacher_id', function($row){
+                                return $row->teacher->name;
+                            })                            
+                            ->addColumn('file', function($row){
+                                $btnfile = '<a href="'.$row->file.'" data-toggle="tooltip" data-original-title="View" class="edit btn btn-dark btn-sm"><span><i class="fas fa-download"></i></span></a>';
+                                return $btnfile;
+                            })
+                            ->addColumn('action', function($row){
 
-            $i = 1;
-
-        return view('admin.sertifikat.index', compact(
-            'certificates', 'i', 
-        ));
+                                // $btn = '<a href="javascript:void(0)" data-toggle="tooltip" onclick="updateItem(this)" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm"><span><i class="fas fa-eye"></i></span></a>';
+                                $btn = '<a href="'.route('internship-certificates.edit', $row->id).'" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-warning btn-sm"><span><i class="fas fa-pen-square"></i></span></a>';
+                                $btn .='&nbsp';
+                                $btn .= '<a href="javascript:void(0)" data-toggle="tooltip" onclick="deleteItem(this)" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm"><span><i class="fas fa-trash"></i></a>';
+                                 return $btn;
+                            })
+                            
+                            ->rawColumns(['action','file'])
+                            ->addIndexColumn()
+                            ->make(true);
+            }
+            return view('admin.sertifikat.index', compact('internship_certificate'));
         // return view('admin.sertifikat.index');
     }
 
@@ -35,9 +57,21 @@ class InternshipCertificateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.sertifikat.create');
+        $dataStudent = Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/students')->json();
+            $students = json_decode(json_encode($dataStudent))->students;
+        $dataTeacher = Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/teachers')->json();
+            $teachers = json_decode(json_encode($dataTeacher))->teachers;
+        return view('admin.sertifikat.create', compact('students','teachers'));
     }
 
     /**
@@ -68,11 +102,29 @@ class InternshipCertificateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        return view('admin.sertifikat.edit', compact(
-            'id'
-        ));
+        $data = Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/certificates/'.$id.'/edit')->json();
+            $certificates = json_decode(json_encode($data))->certificates;
+        // $dataStudent = Http::withHeaders([
+        //     'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+        //     'ContentType' => 'application/json',
+        //     'Accept' => 'application/json',
+        //     ])->get('http://localhost/pa/backend/public/api/students')->json();
+        //     $students = json_decode(json_encode($dataStudent))->students;
+        // $dataTeacher = Http::withHeaders([
+        //     'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+        //     'ContentType' => 'application/json',
+        //     'Accept' => 'application/json',
+        //     ])->get('http://localhost/pa/backend/public/api/teachers')->json();
+        //     $teachers = json_decode(json_encode($dataTeacher))->teachers;
+            return view('admin.sertifikat.edit', compact(
+                'certificates'
+            ));
     }
 
     /**

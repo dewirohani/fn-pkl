@@ -10,11 +10,11 @@
                     <div class="card-body">                        
                             <div class="form-group ">
                                 <label>Nama Siswa</label>
-                                <input type="text" class="form-control" name="nama_siswa" id="nama_siswa" placeholder="ex:Jhon">
+                                <input type="text" class="form-control" disabled name="nama_siswa" id="nama_siswa" placeholder="ex:Jhon">
                             </div>                                                    
                             <div class="form-group">
                                 <label>Guru Pembimbing</label>
-                                <select name="guru" id="guru" class="form-control guru">
+                                <select name="guru" id="guru" disabled class="form-control guru">
                                     <option value="0" disabled="true" selected="true"> Pilih Guru Pembimbing</option>
                                 </select>
                             </div>

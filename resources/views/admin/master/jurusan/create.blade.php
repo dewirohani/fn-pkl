@@ -9,18 +9,24 @@
                         <h4 class="card-title"> Tambah Jurusan</h4>
                     </div>
                     <div class="card-body">
-                            {{-- @csrf --}}
+                        <form id="createJurusan">
+                            @csrf
+                            <div class="form-group">
+                                <label>Code</label>
+                                <input type="text" class="form-control" name="code" id="code" placeholder="ex: RPL">
+                            </div>
                             <div class="form-group">
                                 <label>Jurusan</label>
-                                <input type="text" class="form-control" name="jurusan" id="jurusan" placeholder="ex: Rekayasa Perangkat Lunak">
+                                <input type="text" class="form-control" name="name" id="name" placeholder="ex: Rekayasa Perangkat Lunak">
                             </div>
                             <div class="form-group">
                                 <label>Deskripsi</label>
-                                <input type="text" class="form-control" name="deskripsi" id="deskripsi" placeholder="ex: Deskripsi">
+                                <input type="text" class="form-control" name="description" id="description" placeholder="ex: Deskripsi">
                             </div>                            
                             <div class="form-group">
                                 <button class="btn btn-info" id="sbmbtn">Simpan</button>
                             </div>
+                        </form>
                     </div>
                 </div>
             </div>

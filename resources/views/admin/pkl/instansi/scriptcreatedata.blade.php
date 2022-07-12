@@ -1,39 +1,60 @@
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js')}}"></script>
+
 <script>
-$("#sbmbtn").click(function(){
-    var nama_instansi = $("#nama_instansi").val();
-    var alamat_instansi = $("#alamat_instansi").val();
-    var kecamatan = $("#kecamatan").val();
-    var kota_instansi = $("#kota_instansi").val();
-    var pembimbing_du_di = $("#pembimbing_du_di").val();
-    var kontak = $("#kontak").val();
-    var kuota = $("#kuota").val();   
-    var guru = $("#guru").val();   
-    var hasil = {
-        name: nama_instansi,
-        address: alamat_instansi,
-        districts: kecamatan,
-        city: kota_instansi,
-        mentor: pembimbing_du_di,
-        phone: kontak,
-        quota: kuota,
-        teacher_id: guru,
-    };
-
-    $.ajax({
-        type: 'POST',
-        url: 'http://localhost/pa/backend/public/api/places',
-        data: JSON.stringify(hasil),
-        contentType: 'application/json'
-    }).then((result) => {
-        location.href = '/internship-places';
-        Swal.fire({
-            icon: 'success',
-            title: "Tersimpan!",
-            text: "Data berhasil di Simpan",
-            showConfirmButton: true,
-        });
+    $(document).ready(function () {
+    $("#createInstansi").on('submit', function(event){
+        
+        event.preventDefault();
+        let formData = new FormData(this);
+                $.ajax({
+                    url: "http://localhost/pa/backend/public/api/places",
+                    type: "POST",
+                    headers: {
+                        'Accept':'*/*',
+                        'Authorization':'Bearer '+ getCookie('token'),
+                    },
+                    data: formData, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                            console.log(response);
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                toast: true,
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    },
+                                    position: 'top-right'
+                                }).then((result) => {
+                                    // Reload the Page
+                                    location.href = '/internship-places';
+                                })
+                            },
+                            error: function(response, error){   
+                        
+                        // var err = eval("(" + xhr.response.message")");
+                        // console.log(response.responseJSON);                     
+                            swal.fire({
+                                icon: 'error',
+                                title: response.responseJSON.message,
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                },
+                                toast: true,
+                                position: 'top-right'
+                            })
+                    }
+                });
+            });
     });
-});
-
-</script>
+    </script>

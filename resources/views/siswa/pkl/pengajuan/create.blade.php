@@ -36,24 +36,24 @@
                                     <option value="0" disabled="true" selected="true">Pilih Du/Di</option>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label>Status</label>
                                 <select class="form-control" id="status">
                                     <option value="0" disabled="true" selected="true">Status</option>
                                     <option value="Menunggu">Menunggu</option>
                                     <option value="Diterima">Diterima</option>                                
                                   </select>
-                            </div>                     
+                            </div>                      --}}
                             <div class="form-group">
                                 <button class="btn btn-info" id="sbmbtn">Simpan</button>                                
                             </div>                        
                     </div>
                 </div>
             </div>
-            @include('siswa.pkl.pengajuan.scriptcreatedata')
-            @include('siswa.script.scriptgetjurusan')
-            @include('siswa.script.scriptgetkelas')
-            @include('siswa.script.scriptgetperiode')
-            @include('siswa.script.scriptgetinstansi')
-            @include('siswa.script.scriptgetguru')
+            @include('admin.pkl.pengajuan.scriptcreatedata')
+            @include('admin.script.scriptgetjurusan')
+            @include('admin.script.scriptgetkelas')
+            @include('admin.script.scriptgetperiode')
+            @include('admin.script.scriptgetinstansi')
+            @include('admin.script.scriptgetguru')
         @endsection

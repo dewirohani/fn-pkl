@@ -1,31 +1,60 @@
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js')}}"></script>
+
 <script>
-$("#sbmbtn").click(function(){
-    var kelas = $("#kelas").val();
-    var jurusan = $("#jurusan").val();
-    var total_siswa = $("#total_siswa").val();
-    var deskripsi = $("#deskripsi").val();
-    var hasil = {
-        name: kelas,
-        major_id: jurusan,
-        total_student: total_siswa,
-        description: deskripsi
-    };
-
-    $.ajax({
-        type: 'POST',
-        url: 'http://localhost/pa/backend/public/api/grades',
-        data: JSON.stringify(hasil),
-        contentType: 'application/json'
-    }).then((result) => {
-        location.href = '/grades';
-        Swal.fire({
-            icon: 'success',
-            title: "Tersimpan!",
-            text: "Data berhasil di Simpan",
-            showConfirmButton: true,
-        });
+    $(document).ready(function () {
+    $("#createKelas").on('submit', function(event){
+        
+        event.preventDefault();
+        let formData = new FormData(this);
+                $.ajax({
+                    url: "http://localhost/pa/backend/public/api/grades",
+                    type: "POST",
+                    headers: {
+                        'Accept':'*/*',
+                        'Authorization':'Bearer '+ getCookie('token'),
+                    },
+                    data: formData, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                            console.log(response);
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                toast: true,
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    },
+                                    position: 'top-right'
+                                }).then((result) => {
+                                    // Reload the Page
+                                    location.href = '/grades';
+                                })
+                            },
+                            error: function(response, error){   
+                        
+                        // var err = eval("(" + xhr.response.message")");
+                        // console.log(response.responseJSON);                     
+                            swal.fire({
+                                icon: 'error',
+                                title: response.responseJSON.message,
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                },
+                                toast: true,
+                                position: 'top-right'
+                            })
+                    }
+                });
+            });
     });
-});
-
-</script>
+    </script>

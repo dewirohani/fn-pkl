@@ -1,5 +1,17 @@
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js')}}"></script>
 <script>
+    function getCookie(name){
+        let cookie = {};
+        document.cookie.split(';').forEach(function(el)
+        {
+            let[k, v] = el.split('=');
+            cookie[k.trim()]=v;
+        })
+        
+        return cookie[name];
+    }
+</script>
+<script>
 $("#sbmbtn").click(function(){
     var nama_siswa = $("#nama_siswa").val();
     var kelas = $("#kelas").val();
@@ -18,11 +30,15 @@ $("#sbmbtn").click(function(){
 
     $.ajax({
         type: 'POST',
-        url: 'http://127.0.0.1:8000/api/submissions',
+        url: 'http://localhost/pa/backend/public/api/submissions',
+        headers: {
+            'Accept':'*/*',
+            'Authorization':'Bearer '+ getCookie('token'),
+        },
         data: JSON.stringify(hasil),
         contentType: 'application/json'
     }).then((result) => {
-        location.href = '/internship-submission';
+        location.href = '/internship-submissions';
         Swal.fire({
             icon: 'success',
             title: "Tersimpan!",

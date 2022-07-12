@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <link rel="apple-touch-icon" sizes="76x76" href="{{asset('assets/img/logo.png')}}">
     <link rel="icon" type="image/png" href="{{asset('assets/img/logo.png')}}">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
         PKL SMKN 3 PAMEKASAN
     </title>
@@ -13,9 +11,11 @@
         name='viewport' />
     {{-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> --}}
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-    <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" />
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('assets/css/paper-dashboard.css')}}" rel="stylesheet" />
+    <link href="{{ asset('vendor/bootstrap-icons/font/bootstrap-icons.css')}}" rel="stylesheet">
+    <link href="{{asset('vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/style.css')}}" rel="stylesheet" />
 
     @yield('style')
@@ -70,16 +70,16 @@
                                 </div>
                             </div>
                         </form>
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link btn-rotate" href="javascript:;">
-                                    <i class="fa fa-sign-out"></i>
-                                    <p>
-                                        <span class="d-lg-none d-md-block">Logout</span>
-                                    </p>
+                        <ul class="navbar-nav">                           
+                                <a class="nav-link" href="javascript:;">                                                                   
+                                        <i class="fa fa-user"></i> Dewi Rohani                                     
                                 </a>
-                            </li>
-                        </ul>
+                        </ul>                      
+                        <ul class="navbar-nav">                            
+                                <a class="nav-link btn-rotate" href="javascript:;">                                                                    
+                                        <i class="fa fa-sign-out"></i>                                      
+                                </a>                                
+                        </ul>                      
                     </div>
                 </div>
             </nav>
@@ -107,15 +107,32 @@
     <!--   Core JS Files   -->
     <script src="{{asset('assets/js/core/popper.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/perfect-scrollbar.jquery.min.js')}}"></script>
-    <script src="{{ asset('assets/plugins/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('assets/js/core/bootstrap.min.js')}}"></script>
     <script src="{{asset('assets/js/paper-dashboard.min.js?v=2.0.1')}}" type="text/javascript"></script><!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-    <script src="{{asset('assets/vendor/sweetalert/sweetalert.all.js')}}"></script>
-    @include('sweetalert::alert')
+    <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-    
+    <script>
+        $(document).ready(function () {
+          $('#dataTable').DataTable(); // ID From dataTable 
+        });
+    </script>
+    <script>
+        function getCookie(name){
+            let cookie = {};
+            document.cookie.split(';').forEach(function(el){
+                let[k, v] = el.split('=');
+                cookie[k.trim()]=v;
+            })
+            return cookie[name];
+        }
+    </script>
     
 </body>
-
 </html>
 
+
+{{-- @include('admin.script.scriptlogout')                                  --}}

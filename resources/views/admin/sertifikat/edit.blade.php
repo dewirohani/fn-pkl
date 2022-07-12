@@ -8,32 +8,39 @@
                         <h4 class="card-title"> Edit Sertifikat</h4>
                     </div>
                     <div class="card-body">
-                            <div class="form-group">
+                        <form id="editSertifikat" enctype="multipart/form-data">
+                            @csrf                            
+                            @method('PUT')   
+                            <input type="text" id="id" hidden value="{{$certificates->id}}">  
+                            {{-- <div class="form-group">
                                 <label>Nama Siswa</label>
-                                <input type="text" class="form-control" disabled name="nama_siswa" id="nama_siswa" >
-                            </div>
-                            <div class="form-group">
-                                <label>Guru Pembimbing</label>
-                                <select name="guru" id="guru" disabled class="form-control guru">
-                                    <option value="0" disabled="true" selected="true"> Pilih Guru Pembimbing</option>
+                                <select name="student_id" id="student_id" class="form-control student_id">
+                                    <option value="" disabled="true">Pilih Siswa</option>
+                                    @foreach ($students as $studentt)
+                                    <option value="{{ $studentt->id }}">{{ $studentt->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Sertifikat</label>
-                                <form action="#" method="post" enctype="multipart/form-data">
-                                    <br>
-                                    Select image to upload:
-                                    <input type="file" name="fileToUpload" id="sertifikat">
-                                    <input type="submit" value="Upload Image" name="submit">
-                                  </form>
-                            </div>                            
+                                <label>Guru Pembimbing</label>
+                                 <select name="teacher_id" id="teacher_id" class="form-control teacher_id">
+                                    <option value="" disabled="true">Pilih Guru</option>
+                                    @foreach ($teachers as $teacher)
+                                    <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div> --}}
+                            <div class="mb-3">
+                                <label for="formFile" class="form-label">Sertifikat</label>
+                                <input class="form-control" type="file" id="file" name="file" value="{{$certificates->file}}">
+                              </div>                                               
                             <div class="form-group">
-                                <button class="btn btn-info" id="sbmbtn">Simpan</button>
+                                <button class="btn btn-info" id="submit" type="submit">Simpan</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
     @include('admin.sertifikat.scripteditdata')
-    @include('admin.script.scriptgetguru')
+    {{-- @include('admin.script.scriptgetguru') --}}
         @endsection

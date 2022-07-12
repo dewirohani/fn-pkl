@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DataTables;
 use Http;
 
 class GradeController extends Controller
@@ -15,19 +16,39 @@ class GradeController extends Controller
     public function index(Request $request)
     {
         $data = Http::withHeaders([
-            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6',strpos(substr($request->Header('cookie'),'6'), ";")),
-            'ContentType' => 'application/json', 
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/grades')->json();            
-            $grades = json_decode(json_encode($data));
-            // dd($majors);
+            ])->get('http://localhost/pa/backend/public/api'.'/grades')->json();
+            $grades = json_decode(json_encode($data))->grades;
+            // dd($grades);
+        if($request->ajax()){
+            return DataTables::of($grades)
+                            ->addColumn('name', function($row){
+                                return $row->name;
+                            })
+                            ->addColumn('major_id', function($row){
+                                return $row->major->name;
+                            })
+                            ->addColumn('total_students', function($row){
+                                return $row->total_students;
+                            })
+                            ->addColumn('description', function($row){
+                                return $row->description;
+                            })
+                            ->addColumn('action', function($row){
 
-            $i = 1;
+                                $btn = '<a href="'.route('grades.edit', $row->id).'" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-warning btn-sm"><span><i class="fas fa-pen-square"></i></span></a>';
+                                $btn .='&nbsp';
+                                $btn .='<a href="javascript:void(0)" data-toggle="tooltip" onclick="deleteItem(this)" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm"><span><i class="fas fa-trash"></i></a>';
 
-        return view('admin.master.kelas.index', compact(
-            'grades', 'i', 
-        ));
-        // return view('admin.master.kelas.index');
+                                 return $btn;
+                            })
+                            ->rawColumns(['action'])
+                            ->addIndexColumn()
+                            ->make(true);
+            }
+            return view('admin.master.kelas.index', compact('grades'));
     }
 
     /**
@@ -35,29 +56,23 @@ class GradeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.master.kelas.create');
+        $data = Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/majors')->json();
+            $majors = json_decode(json_encode($data))->majors;
+        return view('admin.master.kelas.create', compact('majors'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         //
     }
@@ -68,20 +83,28 @@ class GradeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request ,$id)
     {
+        $data = Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/grades/'.$id.'/edit')->json();
+
+            $grade = json_decode(json_encode($data))->grade;
+            // dd($grade);
+            $dataMajor = Http::withHeaders([
+                'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+                'ContentType' => 'application/json',
+                'Accept' => 'application/json',
+                ])->get('http://localhost/pa/backend/public/api/majors')->json();
+                $majors = json_decode(json_encode($dataMajor))->majors;
+        
         return view('admin.master.kelas.edit', compact(
-            'id'
+            'grade','majors'
         ));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //

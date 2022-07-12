@@ -1,63 +1,72 @@
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js')}}"></script>
-{{-- @include('admin.script.scriptcookie') --}}
 <script>
-    function getCookie(name){
-        let cookie = {};
-        document.cookie.split(';').forEach(function(el)
-        {
-            let[k, v] = el.split('=');
-            cookie[k.trim()]=v;
-        })
-        
-        return cookie[name];
-    }
-</script>
-<script>
-
-    function deleteData(e)
-    {
-        
-            let id = e.getAttribute('data-id');
-            Swal.fire({
-            icon: 'error',
-            title: 'Hapus Data!',
-            text: "Apakah anda yakin ingin menghapus data ini??",
-            showConfirmButton: true,
-            showCancelButton: true
-        }).then((result) => {
-            if(result.isConfirmed){
+    function deleteItem(e) {
+        let id = e.getAttribute('data-id');
+        Swal.fire({
+            title: 'Kamu yakin ?',
+            text: "ingin menghapus data kelas ini ?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Hapus!'
+            }).then((result) => {
+            if (result.isConfirmed) {
                 $.ajax({
+                    type: 'POST',
                     url: "http://localhost/pa/backend/public/api/grades/"+id,
-                    type: "POST",
-                    data: {"_method": "DELETE"},
-                        headers: {
-                            'Accept':'*/*',
-                            'Authorization':'Bearer '+ getCookie('token'),
+                    headers: {
+                        'Accept':'*/*',
+                        'Authorization':'Bearer '+ getCookie('token'),
+                    },
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "_method": "DELETE",
+                    },
+                    dataType: 'JSON',
+                    success: function(response) {
+                        // console.log(response);
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                showConfirmButton: false,
+                                timer: 1250,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                },
+                                toast: true,
+                                position: 'top-right'
+                            }).then((result) => {
+                                // Reload the Page
+                                location.reload();
+                            })
+                            $("#" + id + "").remove(); // you can add name div to remove
                         },
-                    }).then((result) => {
-                        location.reload();
-                        Swal.fire({
-                            icon: 'success',
-                            title: "Deleted!",
-                            text: "Data berhasil di hapus",
-                            showConfirmButton: true,
-                        });
+                    error: function(response){   
+                        // console.log(response.responseJSON);                     
+                            Swal.fire({
+                                icon: 'error',
+                                title: response.responseJSON.message,
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                },
+                                toast: true,
+                                position: 'top-right'
+                            }).then((result) => {
+                                // Reload the Page
+                                // location.reload();
+                            })
+                            $("#" + id + "").remove();
+                    }
                     });
-            }else if(result.isDenied){
-                Swal.fire({
-                    icon: 'error',
-                    title: "Cancelled",
-                    text: "Menghapus data dibatalkan :)",
-                });
-            }
-        });
-    }
-            //     });         
-            // });
-            // $.post("http://127.0.0.1:8000/api/majors",{
-            //     name:jurusan,
-            //     description:deskripsi
-            // },function(response){
-            //     location.reload(this);
-            // });
+                }
+            })
+
+        };
 </script>

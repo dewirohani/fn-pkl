@@ -7,47 +7,61 @@
                     <div class="card-header">
                         <h4 class="card-title"> Tambah Instansi</h4>
                     </div>
-                    <div class="card-body">                        
+                    <div class="card-body">   
+                        <form id="createInstansi">
+                            @csrf                    
                             <div class="form-group">
                                 <label>Nama</label>
-                                <input type="text" class="form-control" name="nama_instansi" id="nama_instansi" placeholder="ex: Jhon">
+                                <input type="text" class="form-control" name="name" id="name" placeholder="ex: Jhon">
                             </div>                                                    
                             <div class="form-group">
                                 <label>Alamat</label>
-                                <input type="text" class="form-control" name="alamat_instansi" id="alamat_instansi" placeholder="ex: Jl.xxx">
+                                <input type="text" class="form-control" name="address" id="address" placeholder="ex: Jl.xxx">
                             </div>
                             <div class="form-group">
                                 <label>Kecamatan</label>
-                                <input type="text" class="form-control" name="kecamatan" id="kecamatan" placeholder="ex: Pamekasan">
+                                <input type="text" class="form-control" name="districts" id="districts" placeholder="ex: Pamekasan">
                             </div> 
                             <div class="form-group">
                                 <label>Kota</label>
-                                <input type="text" class="form-control" name="kota_instansi" id="kota_instansi" placeholder="ex: Pamekasan">
+                                <input type="text" class="form-control" name="city" id="city" placeholder="ex: Pamekasan">
                             </div> 
                             <div class="form-group">
                                 <label>Pembimbing Du/Di</label>
-                                <input type="text" class="form-control" name="pembimbing_du_di" id="pembimbing_du_di" placeholder="ex: Jhon">
+                                <input type="text" class="form-control" name="mentor" id="mentor" placeholder="ex: Jhon">
                             </div> 
                             <div class="form-group">
-                                <label>Kontak</label>
-                                <input type="text" class="form-control" name="kontak" id="kontak" placeholder="ex: 08xxxxxxxxxx">
-                            </div> 
-                            <div class="form-group">
-                                <label>Kuota</label>
-                                <input type="number" class="form-control" name="kuota" id="kuota" placeholder="ex: 1">
-                            </div> 
-                            <div class="form-group">
-                                <label>Guru Pembimbing</label>
-                                <select name="guru" id="guru" class="form-control guru">
-                                    <option value="0" disabled="true" selected="true"> Pilih Guru Pembimbing</option>
+                                <label>Guru</label>
+                                <select name="teacher_id" id="teacher_id" class="form-control teacher_id">
+                                    <option value="" disabled="true">Pilih Guru</option>
+                                    @foreach ($teachers as $teacher)
+                                    <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-info" id="sbmbtn">Simpan</button>                                
+                                <label>Kontak</label>
+                                <input type="text" class="form-control" name="phone" id="phone" placeholder="ex: 08xxxxxxxxxx">
+                            </div> 
+                            <div class="form-group">
+                                <label>Kuota</label>
+                                <input type="number" class="form-control" name="quota" id="quota" placeholder="ex: 1">
+                            </div>                            
+                            <div class="form-group">
+                                <label>Waktu Datang</label>
+                                <input type="time" class="form-control" name="time_in" id="time_in" placeholder="ex: 07:00:00">
+                            </div>                            
+                            <div class="form-group">
+                                <label>Waktu Pulang</label>
+                                <input type="time" class="form-control" name="time_out" id="time_out" placeholder="ex: 13:00:00">
+                            </div>                            
+                            <div class="form-group">
+                                <button class="btn btn-info" id="submit" type="submit">Simpan</button>                                
                             </div>
+                        </form> 
                     </div>
                 </div>
             </div>
             @include('admin.pkl.instansi.scriptcreatedata')
-            @include('admin.script.scriptgetguru')
+            
         @endsection

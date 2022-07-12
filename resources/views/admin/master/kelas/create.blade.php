@@ -8,30 +8,30 @@
                         <h4 class="card-title"> Tambah Kelas</h4>
                     </div>
                     <div class="card-body">
+                        <form id="createKelas">
                             <div class="form-group">
                                 <label>Kelas</label>
-                                <input type="text" class="form-control" name="kelas" id="kelas" placeholder="ex: XI xxx 1">
+                                <input type="text" class="form-control" name="name" id="name" placeholder="ex: XI xxx 1">
                             </div>                        
                             <div class="form-group">
                                 <label>Jurusan</label>
-                                <select name="jurusan" id="jurusan" class="form-control jurusan">
-                                    <option value="0" disabled="true" selected="true">Jurusan</option>
+                                <select name="major_id" id="major_id" class="form-control major_id">
+                                    <option value="" disabled="true">Pilih Jurusan</option>
+                                    @foreach ($majors as $major)
+                                    <option value="{{ $major->id }}">{{ $major->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Total Siswa</label>
-                                <input type="text" class="form-control" name="total_siswa" id="total_siswa" placeholder="ex: 10">
-                            </div>
-                            <div class="form-group">
                                 <label>Deskripsi</label>
-                                <input type="text" class="form-control" name="deskripsi" id="deskripsi" placeholder="ex: Deskripsi">
+                                <input type="text" class="form-control" name="description" id="description" placeholder="ex: Deskripsi">
                             </div> 
                             <div class="form-group">
-                                <button class="btn btn-info" id="sbmbtn">Simpan</button>                                
+                                <button class="btn btn-info" id="submit" type="submit">Simpan</button>                                
                             </div>
+                        </form>
                     </div>
                 </div>
             </div>
             @include('admin.master.kelas.scriptcreatedata')
-            @include('admin.script.scriptgetjurusan')
         @endsection

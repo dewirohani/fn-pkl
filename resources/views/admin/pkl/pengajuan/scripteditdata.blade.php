@@ -1,51 +1,63 @@
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js')}}"></script>
-<script>
-$(document).ready(function(){
-	var id = {{ $id }};
-	$.ajax({
-			type:'GET',
-			url:'http://localhost/pa/backend/public/api/submissions/'+id,
-			headers: {
-            'Accept':'*/*',
-            'Authorization':'Bearer '+ getCookie('token'),
-        },
-			dataType: "json",
-			success: function(data){
-					$("#nama_siswa").val(data.student_id);
-					$("#kelas").val(data.grade_id);
-					$("#jurusan").val(data.major_id);
-					$("#periode").val(data.period_id);					
-					$("#du_di").val(data.internship_place_id);					
-					$("#status").val(data.status);					
-									
-			}
-	});
-	
-	$("#sbmbtn").click(function(){
-		event.preventDefault();
-		var du_di = $("#du_di").val();
-		var data = {
-        internship_place_id: du_di,
-    	};
 
-		$.ajax({
-			type: "PATCH",
-			url: 'http://localhost/pa/backend/public/api/submissions/'+{{$id}},
-			headers: {
-            'Accept':'*/*',
-            'Authorization':'Bearer '+ getCookie('token'),
-        },
-			data: JSON.stringify(data),
-			contentType: 'application/json',
-		}).then((result) => {
-        location.href = '/internship-submissions';
-        Swal.fire({
-            icon: 'success',
-            title: "Update!",
-            text: "Data berhasil di update",
-            showConfirmButton: true,
-        	});
-		});
-	});
-});
+<script>
+        $("#editPengajuan").on('submit', function(event){
+            event.preventDefault();
+            $(".preloader").fadeIn();
+            let id = $('#id').val();
+            let formData = new FormData(this);
+                $.ajax({
+                    url: "http://localhost/pa/backend/public/api/submissions/"+id,
+                    type: "POST",
+                    headers: {
+                        'Accept':'*/*',
+                        'Authorization':'Bearer '+ getCookie('token'),
+                    },
+                    contentType: 'application/json',
+                    data: formData,
+                    cache: false,
+                    contentType : false,
+                    processData: false,
+                    success : function(response){
+                        $(".preloader").fadeOut();
+                        if (response.success){
+                            // window.location.href = "{{route('majors.index')}}";
+                            // sessionStorage.setItem('success',response.message);
+                            Swal.fire({
+                                    icon: 'success',
+                                    title: response.message,
+                                    toast: true,
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    },
+                                    position: 'top-right'
+                                }).then((result) => {
+                                    // Reload the Page
+                                    location.href = '/internship-submissions';
+                                })
+                        }
+                    }, 
+                    error: function(response){
+                        $(".preloader").fadeOut();
+                        swal.fire({
+                                icon: 'error',
+                                title: response.responseJSON.message,
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                },
+                                toast: true,
+                                position: 'top-right'
+                            })
+                    }
+              
+                });
+            });
 </script>

@@ -1,48 +1,60 @@
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js')}}"></script>
+
 <script>
-    function getCookie(name){
-        let cookie = {};
-        document.cookie.split(';').forEach(function(el)
-        {
-            let[k, v] = el.split('=');
-            cookie[k.trim()]=v;
-        })
+    $(document).ready(function () {
+    $("#createSertifikat").on('submit', function(event){
         
-        return cookie[name];
-    }
-</script>
-<script>
-$("#sbmbtn").click(function(){
-    var nama_siswa = $("#nama_siswa").val();
-    var guru = $("#guru").val();
-    var sertifikat = $("#sertifikat").val();    
-    var path = $("#path").val();    
-    
-    var hasil = {        
-        student_id: nama_siswa,
-        teacher_id: guru,
-        name: sertifikat,        
-        path: path,        
-    };
-
-    $.ajax({
-        type: 'POST',
-        url: 'http://localhost/pa/backend/public/api/certificates',
-        headers: {
-            'Accept':'*/*',
-            'Authorization':'Bearer '+ getCookie('token'),
-        },
-        data: JSON.stringify(hasil),
-        contentType: 'application/json'
-    }).then((result) => {
-        location.href = '/internship-certificates';
-        Swal.fire({
-            icon: 'success',
-            title: "Tersimpan!",
-            text: "Data berhasil di Simpan",
-            showConfirmButton: true,
-        });
+        event.preventDefault();
+        let formData = new FormData(this);
+                $.ajax({
+                    url: "http://localhost/pa/backend/public/api/certificates",
+                    type: "POST",
+                    headers: {
+                        'Accept':'*/*',
+                        'Authorization':'Bearer '+ getCookie('token'),
+                    },
+                    data: formData, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                            console.log(response);
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                toast: true,
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    },
+                                    position: 'top-right'
+                                }).then((result) => {
+                                    // Reload the Page
+                                    location.href = '/internship-certificates';
+                                })
+                            },
+                            error: function(response, error){   
+                        
+                        // var err = eval("(" + xhr.response.message")");
+                        // console.log(response.responseJSON);                     
+                            swal.fire({
+                                icon: 'error',
+                                title: response.responseJSON.message,
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                },
+                                toast: true,
+                                position: 'top-right'
+                            })
+                    }
+                });
+            });
     });
-});
-
-</script>
+    </script>

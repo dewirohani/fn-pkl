@@ -1,47 +1,60 @@
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js')}}"></script>
+
 <script>
-    function getCookie(name){
-        let cookie = {};
-        document.cookie.split(';').forEach(function(el)
-        {
-            let[k, v] = el.split('=');
-            cookie[k.trim()]=v;
-        })
+    $(document).ready(function () {
+    $("#createPeriode").on('submit', function(event){
         
-        return cookie[name];
-    }
-</script>
-<script>
-$("#sbmbtn").click(function(){
-    var nama_periode = $("#nama_periode").val();
-    var tanggal_mulai = $("#tanggal_mulai").val();
-    var tanggal_berakhir = $("#tanggal_berakhir").val();
-    var status = $("#status").val();   
-    var hasil = {
-        nama_periode: nama_periode,
-        start_date: tanggal_mulai,
-        end_date: tanggal_berakhir,
-        status: status,        
-    };
-
-    $.ajax({
-        type: 'POST',
-        url: 'http://localhost/pa/backend/public/api/periods',
-        headers: {
-            'Accept':'*/*',
-            'Authorization':'Bearer '+ getCookie('token'),
-        },
-        data: JSON.stringify(hasil),
-        contentType: 'application/json'
-    }).then((result) => {
-        location.href = '/periods';
-        Swal.fire({
-            icon: 'success',
-            title: "Tersimpan!",
-            text: "Data berhasil di Simpan",
-            showConfirmButton: true,
-        });
+        event.preventDefault();
+        let formData = new FormData(this);
+                $.ajax({
+                    url: "http://localhost/pa/backend/public/api/periods",
+                    type: "POST",
+                    headers: {
+                        'Accept':'*/*',
+                        'Authorization':'Bearer '+ getCookie('token'),
+                    },
+                    data: formData, 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                            console.log(response);
+                            Swal.fire({
+                                icon: 'success',
+                                title: response.message,
+                                toast: true,
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    },
+                                    position: 'top-right'
+                                }).then((result) => {
+                                    // Reload the Page
+                                    location.href = '/periods';
+                                })
+                            },
+                            error: function(response, error){   
+                        
+                        // var err = eval("(" + xhr.response.message")");
+                        // console.log(response.responseJSON);                     
+                            swal.fire({
+                                icon: 'error',
+                                title: response.responseJSON.message,
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                },
+                                toast: true,
+                                position: 'top-right'
+                            })
+                    }
+                });
+            });
     });
-});
-
-</script>
+    </script>

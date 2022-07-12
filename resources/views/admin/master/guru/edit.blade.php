@@ -7,30 +7,45 @@
                     <div class="card-header">
                         <h4 class="card-title"> Edit Guru</h4>
                     </div>
-                    <div class="card-body">                     
+                    <div class="card-body">      
+                        <form id="editGuru">
+                            @csrf
+                            @method('PUT')        
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" class="form-control" name="username" id="username" placeholder="ex: JhonDoe">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" class="form-control" name="email" id="email" placeholder="ex: jhon@xxx">
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="text" class="form-control" name="password" id="password" placeholder="ex: xxxxx">
+                            </div>          
                             <div class="form-group">
                                 <label>NIP</label>
                                 <input type="text" class="form-control" name="nip" id="nip" >
                             </div>
                             <div class="form-group">
                                 <label>Nama Guru</label>
-                                <input type="text" class="form-control" name="nama_guru" id="nama_guru" >
+                                <input type="text" class="form-control" name="name" id="name" >
                             </div>                           
                             <div class="form-group">
                                 <label>Alamat</label>
-                                <input type="text" class="form-control" name="alamat_guru" id="alamat_guru" >
+                                <input type="text" class="form-control" name="address" id="address" >
                             </div>
                             <div class="form-group">
                                 <label>Tempat Lahir</label>
-                                <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir" >
+                                <input type="text" class="form-control" name="place_of_birth" id="place_of_birth" >
                             </div>
                             <div class="form-group">
                                 <label>Tanggal Lahir</label>
-                                <input type="date" class="form-control" name="tanggal_lahir" id="tanggal_lahir">
+                                <input type="date" class="form-control" name="date_of_birth" id="date_of_birth">
                             </div>
                             <div class="form-group">
                                 <label>Jenis Kelamin</label>
-                                <select class="form-control" id="jenis_kelamin">
+                                <select class="form-control" id="gender">
                                     <option value="0" disabled="true" selected="true">Jenis Kelamin</option>
                                     <option value="Laki-Laki">Laki-Laki</option>
                                     <option value="Perempuan">Perempuan</option>                                    
@@ -38,7 +53,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Agama</label>
-                                <select class="form-control" id="agama">
+                                <select class="form-control" id="religion">
                                     <option value="0" disabled="true" selected="true">Agama</option>
                                     <option value="Islam">Islam</option>
                                     <option value="Kristen">Kristen</option>
@@ -50,15 +65,16 @@
                             </div>
                             <div class="form-group">
                                 <label>No HP</label>
-                                <input type="text" class="form-control" name="no_hp" id="no_hp" >
+                                <input type="text" class="form-control" name="phone" id="phone" >
                             </div>
                             <div class="form-group">
                                 <label> User</label>
-                                <input type="text" class="form-control" name="user" id="user" >
+                                <input type="text" class="form-control" name="user_id" id="user_id" >
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-info" id="sbmbtn">Simpan</button>
+                                <button class="btn btn-info" id="submit" type="submit">Simpan</button>
                             </div>
+                        </form>
                     </div>
                 </div>
             </div>

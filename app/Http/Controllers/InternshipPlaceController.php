@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DataTables;
 use Http;
 
 class InternshipPlaceController extends Controller
@@ -15,63 +16,103 @@ class InternshipPlaceController extends Controller
     public function index(Request $request)
     {
         $data = Http::withHeaders([
-            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6',strpos(substr($request->Header('cookie'),'6'), ";")),
-            'ContentType' => 'application/json', 
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/places')->json();            
-            $places = json_decode(json_encode($data));
-            // dd($majors);
+            ])->get('http://localhost/pa/backend/public/api'.'/places')->json();
+            // dd($data);
+            $internship_places = json_decode(json_encode($data))->internship_places;
+        if($request->ajax()){
+            return DataTables::of($internship_places)                           
+                            ->addColumn('name', function($row){
+                                return $row->name;
+                            })                         
+                            ->addColumn('address', function($row){
+                                return $row->address;
+                            })
+                            ->addColumn('districts', function($row){
+                                return $row->districts;
+                            })
+                            ->addColumn('city', function($row){
+                                return $row->city;
+                            })
+                            ->addColumn('mentor', function($row){
+                                return $row->mentor;
+                            })
+                            ->addColumn('teacher_id', function($row){
+                                return $row->teacher->name;
+                            })
+                            ->addColumn('phone', function($row){
+                                return $row->phone;
+                            })                           
+                            ->addColumn('quota', function($row){
+                                return $row->quota;
+                            })                           
+                            ->addColumn('time_in', function($row){
+                                return $row->time_in;
+                            })                           
+                            ->addColumn('time_out', function($row){
+                                return $row->time_out;
+                            })                           
+                            ->addColumn('action', function($row){
 
-            $i = 1;
+                                $btn = '<a href="'.route('internship-places.edit', $row->id).'" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-warning btn-sm"><span><i class="fas fa-pen-square"></i></span></a>';
+                                $btn .='&nbsp';
+                                $btn .= '<a href="javascript:void(0)" data-toggle="tooltip" onclick="deleteItem(this)" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm"><span><i class="fas fa-trash"></i></a>';
 
-        return view('admin.pkl.instansi.index', compact(
-            'places', 'i', 
-        ));
-        // return view('admin.pkl.instansi.index');
+                                 return $btn;
+                            })
+                            ->rawColumns(['action'])
+                            ->addIndexColumn()
+                            ->make(true);
+            }
+            return view('admin.pkl.instansi.index', compact('internship_places'));
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function create(Request $request)
     {
-        return view('admin.pkl.instansi.create');
+        $data = Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/teachers')->json();
+            $teachers = json_decode(json_encode($data))->teachers;
+        return view('admin.pkl.instansi.create', compact('teachers'));
+        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+      //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        $data = Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/places/'.$id.'/edit')->json();
+            // dd($data);
+            $place = json_decode(json_encode($data))->place;
+            // dd($place);
+        $dataTeachers = Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/teachers'.$id.'/edit')->json();
+            // dd($data);
+            $teachers = json_decode(json_encode($dataTeachers))->teachers;
+        
         return view('admin.pkl.instansi.edit', compact(
-            'id'
+            'place','teachers'
         ));
     }
 
