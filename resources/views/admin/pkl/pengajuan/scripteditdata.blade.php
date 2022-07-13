@@ -43,6 +43,7 @@
                     }, 
                     error: function(response){
                         $(".preloader").fadeOut();
+                        console.log(response);
                         swal.fire({
                                 icon: 'error',
                                 title: response.responseJSON.message,

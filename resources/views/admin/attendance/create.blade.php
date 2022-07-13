@@ -7,43 +7,38 @@
                     <div class="card-header">
                         <h4 class="card-title "> Tambah Attendance</h4>
                     </div>
-                    <div class="card-body">                      
+                    <div class="card-body">    
+                        <form action="createAttendance">
                             <div class="form-group ">
                                 <label>Nama Siswa</label>
-                                <input type="text" class="form-control" name="nama_siswa" id="nama_siswa" placeholder="ex: Jhon">
+                                <select name="student_id" id="student_id" class="form-control student_id">
+                                    <option value="" disabled="true">Pilih Siswa</option>
+                                    @foreach ($students as $student)
+                                    <option value="{{ $student->id }}">{{ $student->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>                                                    
-                            {{-- <div class="form-group">
+                            <div class="form-group">
+                                <label>Nama Guru</label>
+                                <select name="teacher_id" id="teacher_id" class="form-control teacher_id">
+                                    <option value="" disabled="true">Pilih Guru</option>
+                                    @foreach ($teachers as $teacher)
+                                    <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group" hidden>
                                 <label>Tanggal</label>
-                                <input type="date" class="form-control" name="tanggal" id="tanggal">
-                            </div> --}}
+                                <input type="date" class="form-control" name="date" id="date">
+                            </div> 
                             <div class="form-group" hidden>
                                 <label>Waktu</label>
-                                <input type="time" class="form-control" name="waktu" id="waktu">
+                                <input type="time" class="form-control" name="time_in" id="time_in">
                             </div> 
                             <div class="form-group">
-                                <button class="form-control" style="background-color:teal; color:white" name="presensi" id="presensi">PRESENSI</button>                        
+                                <button class="form-control" style="background-color:teal; color:white" name="submit" id="submit" type="submit">PRESENSI</button>                        
                             </div>
-                            {{-- <div class="form-group">
-                                <label>Foto</label>
-                                <form action="#" method="post" enctype="multipart/form-data">
-                                    <br>
-                                    Select image to upload:
-                                    <input type="file" name="fileToUpload" id="foto">
-                                    <input type="submit" value="Upload Image" name="submit">
-                                  </form>
-                            </div> 
-                            <div class="form-group">
-                                <label>Signature</label>
-                                <form action="#" method="post" enctype="multipart/form-data">                                
-                                    Select signature to upload:
-                                    <input type="file" name="fileToUpload" id="signature">
-                                    <input type="submit" value="Upload Image" name="submit">
-                                  </form>
-                            </div>  --}}
-                                                
-                            {{-- <div class="form-group">
-                                <button class="btn btn-info" id="sbmbtn">Simpan</button>                        
-                            </div> --}}
+                        </form>                  
                     </div>
                 </div>
             </div>
