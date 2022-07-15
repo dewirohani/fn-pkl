@@ -65,13 +65,13 @@ class InternshipCertificateController extends Controller
             'Accept' => 'application/json',
             ])->get('http://localhost/pa/backend/public/api/students')->json();
             $students = json_decode(json_encode($dataStudent))->students;
-        $dataTeacher = Http::withHeaders([
-            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
-            'ContentType' => 'application/json',
-            'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/teachers')->json();
-            $teachers = json_decode(json_encode($dataTeacher))->teachers;
-        return view('admin.sertifikat.create', compact('students','teachers'));
+        // $dataTeacher = Http::withHeaders([
+        //     'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+        //     'ContentType' => 'application/json',
+        //     'Accept' => 'application/json',
+        //     ])->get('http://localhost/pa/backend/public/api/teachers')->json();
+        //     $teachers = json_decode(json_encode($dataTeacher))->teachers;
+        return view('admin.sertifikat.create', compact('students'));
     }
 
     /**

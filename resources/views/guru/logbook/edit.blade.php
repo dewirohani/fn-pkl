@@ -32,6 +32,6 @@
                     </div>
                 </div>
             </div>
-            @include('admin.logbook.scripteditdata')
+            @include('guru.logbook.scripteditdata')
             
         @endsection

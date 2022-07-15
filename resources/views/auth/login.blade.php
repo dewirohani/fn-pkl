@@ -77,7 +77,7 @@
                   document.cookie = "token=" + response.token;
                   sessionStorage.setItem('success', response.message);
                   // console.log(document.cookie);
-                  window.location.href = "{{ route('home') }}";
+                  window.location.href = "{{ route('home.index') }}";
               }
           },
           error: function(response) {

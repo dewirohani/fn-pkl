@@ -2,12 +2,12 @@
 
 <script>
     $(document).ready(function () {
-    $("#createA").on('submit', function(event){
+    $("#createPenempatan").on('submit', function(event){
         
         event.preventDefault();
         let formData = new FormData(this);
                 $.ajax({
-                    url: "http://localhost/pa/backend/public/api/attendances",
+                    url: "http://localhost/pa/backend/public/api/internship-placements",
                     type: "POST",
                     headers: {
                         'Accept':'*/*',
@@ -33,7 +33,7 @@
                                     position: 'top-right'
                                 }).then((result) => {
                                     // Reload the Page
-                                    location.href = '/attendances';
+                                    location.href = '/internship-placements';
                                 })
                             },
                             error: function(response, error){   

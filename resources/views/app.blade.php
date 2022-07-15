@@ -76,7 +76,7 @@
                                 </a>
                         </ul>                      
                         <ul class="navbar-nav">                            
-                                <a class="nav-link btn-rotate" href="javascript:;">                                                                    
+                                <a class="nav-link " href="javascript:;">                                                                    
                                         <i class="fa fa-sign-out"></i>                                      
                                 </a>                                
                         </ul>                      

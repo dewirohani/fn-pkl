@@ -35,16 +35,15 @@ class AttendanceController extends Controller
                             })
                             ->addColumn('time_in', function($row){
                                 return $row->time_in;
-                            })
+                            })                          
                             ->addColumn('time_out', function($row){
                                 return $row->time_out;
-                            })
+                            })                          
                             ->addColumn('description', function($row){
                                 return $row->description;
                             })
                             ->addColumn('action', function($row){
 
-                                // $btn = '<a href="javascript:void(0)" data-toggle="tooltip" onclick="updateItem(this)" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm"><span><i class="fas fa-eye"></i></span></a>';
                                 $btn = '<a href="'.route('attendances.edit', $row->id).'" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-warning btn-sm"><span><i class="fas fa-pen-square"></i></span></a>';
                                 $btn .='&nbsp';
                                 $btn .= '<a href="javascript:void(0)" data-toggle="tooltip" onclick="deleteItem(this)" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm"><span><i class="fas fa-trash"></i></a>';
@@ -63,9 +62,22 @@ class AttendanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.attendance.create');
+        $dataStudent = Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/students')->json();
+            $students = json_decode(json_encode($dataStudent))->students;
+        // $dataTeacher = Http::withHeaders([
+        //     'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+        //     'ContentType' => 'application/json',
+        //     'Accept' => 'application/json',
+        //     ])->get('http://localhost/pa/backend/public/api/teachers')->json();
+        //     $teachers = json_decode(json_encode($dataTeacher))->teachers;
+        return view('admin.attendance.create', compact('students'));
+        // return view('admin.attendance.create');
     }
 
     /**

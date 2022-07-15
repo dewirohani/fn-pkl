@@ -6,47 +6,40 @@ use Illuminate\Http\Request;
 use DataTables;
 use Http;
 
-class LogbookController extends Controller
+class InternshipReportController extends Controller
 {
-
     public function index(Request $request)
     {
         $data = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api'.'/logbooks')->json();
+            ])->get('http://localhost/pa/backend/public/api'.'/reports')->json();
             
             // dd($data);
-            $logbooks = json_decode(json_encode($data))->logbooks;
+            $internshipReports = json_decode(json_encode($data))->internshipReports;
         if($request->ajax()){
-            return DataTables::of($logbooks)
-                            // ->addColumn('attendance_id', function($row){
-                            //     return $row->attendance_id;
-                            // })
+            return DataTables::of($internshipReports)                          
                             ->addColumn('student_id', function($row){
                                 return $row->student->name;
                             })                        
                             ->addColumn('teacher_id', function($row){
                                 return $row->teacher->name;
-                            })
-                            ->addColumn('date', function($row){
-                                return $row->date;
-                            })
-                            ->addColumn('activity', function($row){
-                                return $row->activity;
-                            })
+                            })                                                  
                             ->addColumn('status_id', function($row){
-                                return $row->logbook_statuses->name;
+                                return $row->status->name;
                             })
                             ->addColumn('file', function($row){
                                 $btnfile = '<a href="'.$row->file.'" data-toggle="tooltip" data-original-title="View" class="edit btn btn-dark btn-sm"><span><i class="fas fa-download"></i></span></a>';
                                 return $btnfile;
                             })
+                            ->addColumn('description', function($row){
+                                return $row->description;
+                            })
                             ->addColumn('action', function($row){
 
                                 // $btn = '<a href="javascript:void(0)" data-toggle="tooltip" onclick="updateItem(this)" data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm"><span><i class="fas fa-eye"></i></span></a>';
-                                $btn = '<a href="'.route('logbooks.edit', $row->id).'" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-warning btn-sm"><span><i class="fas fa-pen-square"></i></span></a>';
+                                $btn = '<a href="'.route('reports.edit', $row->id).'" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-warning btn-sm"><span><i class="fas fa-pen-square"></i></span></a>';
                                 $btn .='&nbsp';
                                 $btn .= '<a href="javascript:void(0)" data-toggle="tooltip" onclick="deleteItem(this)" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm"><span><i class="fas fa-trash"></i></a>';
                                  return $btn;
@@ -56,7 +49,7 @@ class LogbookController extends Controller
                             ->addIndexColumn()
                             ->make(true);
             }
-            return view('admin.logbook.index', compact('logbooks'));
+            return view('admin.report.index', compact('internshipReports'));
         // return view('admin.logbook.index');
     }
 
@@ -69,13 +62,8 @@ class LogbookController extends Controller
             'Accept' => 'application/json',
             ])->get('http://localhost/pa/backend/public/api/students')->json();
             $students = json_decode(json_encode($dataStudent))->students;
-        $dataTeacher = Http::withHeaders([
-            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
-            'ContentType' => 'application/json',
-            'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/teachers')->json();
-            $teachers = json_decode(json_encode($dataTeacher))->teachers;
-        return view('admin.logbook.create', compact('students','teachers'));
+        
+        return view('admin.report.create', compact('students'));
         // return view('admin.logbook.create');
     }
 
@@ -95,18 +83,18 @@ class LogbookController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/logbooks/'.$id.'/edit')->json();
+            ])->get('http://localhost/pa/backend/public/api/reports/'.$id.'/edit')->json();
             // dd($data);
-            $logbook = json_decode(json_encode($data))->logbook;
+            $report = json_decode(json_encode($data))->report;
             $dataStatuses = Http::withHeaders([
                 'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                 'ContentType' => 'application/json',
                 'Accept' => 'application/json',
-                ])->get('http://localhost/pa/backend/public/api/logbook-statuses')->json();
-                // dd($data);
-                $logbookStatuses = json_decode(json_encode($dataStatuses))->logbookStatuses;
-            return view('admin.logbook.edit', compact(
-                'logbook','logbookStatuses'
+                ])->get('http://localhost/pa/backend/public/api/report-statuses')->json();
+                // dd($dataStatuses);
+                $internshipReportStatuses = json_decode(json_encode($dataStatuses))->internshipReportStatuses;
+            return view('admin.report.edit', compact(
+                'report','internshipReportStatuses'
             ));
     }
 

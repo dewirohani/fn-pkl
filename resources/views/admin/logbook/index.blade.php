@@ -6,7 +6,7 @@
             <div class="col-lg-12">
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Logbook</h6>
+                  <h6 class="m-0 font-weight-bold text-dark">Logbook</h6>
                   <a href="{{ route('logbooks.create') }}">
                     <button class="btn btn-success mr-2" style="float: right"><i class="fa fa-plus"></i></button>
                   </a>
@@ -16,26 +16,26 @@
                     <thead class="thead-light">
                       <tr>
                         <th>#</th>
-                        <th>Attendance</th>
-                        <th>Nama Siswa</th>
+                        {{-- <th>Attendance</th> --}}
+                        <th>Nama Siswa</th>                      
                         <th>Guru</th>
                         <th>Tanggal</th>
+                        <th>Kegiatan</th>
                         <th>Status</th>
-                        <th>File</th>                        
+                        <th>File</th>                       
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tfoot>
-                      <tr>
                         <th>#</th>
-                        <th>Attendance</th>
-                        <th>Nama Siswa</th>
+                        {{-- <th>Attendance</th> --}}
+                        <th>Nama Siswa</th>                      
                         <th>Guru</th>
                         <th>Tanggal</th>
+                        <th>Kegiatan</th>
                         <th>Status</th>
-                        <th>File</th>  
+                        <th>File</th>                         
                         <th>Action</th>
-                      </tr>
                     </tfoot>
                     <tbody>
 
@@ -69,17 +69,17 @@
             columns: [{
                     data: 'DT_RowIndex',
                 },
-                {
-                    data: 'attendance_id',
-                },
+                // {
+                //     data: 'attendance_id',
+                // },
                 {
                     data: 'student_id',
-                },
+                },             
                 {
                     data: 'teacher_id',
                 },
                 {
-                    data: 'date_of_logbook',
+                    data: 'date',
                 },
                 {
                     data: 'activity',
@@ -89,7 +89,7 @@
                 },
                 {
                     data: 'file',
-                },             
+                },                          
                 {
                     data: 'action',
                 },

@@ -1,28 +1,33 @@
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js')}}"></script>
 
 <script>
-    $(document).ready(function () {
-    $("#createA").on('submit', function(event){
-        
-        event.preventDefault();
-        let formData = new FormData(this);
+        $("#editLaporan").on('submit', function(event){
+            event.preventDefault();
+            $(".preloader").fadeIn();
+            let id = $('#id').val();
+            // let id = e.getAttribute('data-id');
+            let formData = new FormData(this);
                 $.ajax({
-                    url: "http://localhost/pa/backend/public/api/attendances",
+                    url: "http://localhost/pa/backend/public/api/reports/"+id,
                     type: "POST",
                     headers: {
                         'Accept':'*/*',
                         'Authorization':'Bearer '+ getCookie('token'),
                     },
-                    data: formData, 
+                    contentType: 'application/json',
+                    data: formData,
                     cache: false,
-                    contentType: false,
+                    contentType : false,
                     processData: false,
-                    success: function(response) {
-                            console.log(response);
+                    success : function(response){
+                        $(".preloader").fadeOut();
+                        if (response.success){
+                            // window.location.href = "{{route('majors.index')}}";
+                            // sessionStorage.setItem('success',response.message);
                             Swal.fire({
-                                icon: 'success',
-                                title: response.message,
-                                toast: true,
+                                    icon: 'success',
+                                    title: response.message,
+                                    toast: true,
                                     showConfirmButton: false,
                                     timer: 1500,
                                     timerProgressBar: true,
@@ -33,14 +38,13 @@
                                     position: 'top-right'
                                 }).then((result) => {
                                     // Reload the Page
-                                    location.href = '/attendances';
+                                    location.href = '/reports';
                                 })
-                            },
-                            error: function(response, error){   
-                        
-                        // var err = eval("(" + xhr.response.message")");
-                        // console.log(response.responseJSON);                     
-                            swal.fire({
+                        }
+                    }, 
+                    error: function(response){
+                        $(".preloader").fadeOut();
+                        swal.fire({
                                 icon: 'error',
                                 title: response.responseJSON.message,
                                 showConfirmButton: false,
@@ -54,7 +58,7 @@
                                 position: 'top-right'
                             })
                     }
+              
                 });
             });
-    });
-    </script>
+</script>

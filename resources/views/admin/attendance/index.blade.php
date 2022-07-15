@@ -19,8 +19,8 @@
                         <th>Nama Siswa</th>                       
                         <th>Guru</th>
                         <th>Tanggal</th>
-                        <th>Waktu Mulai</th>                   
-                        <th>Waktu Berakhir</th>                   
+                        <th>Waktu Mulai</th>                                    
+                        <th>Waktu Pulang</th>                                    
                         <th>Deskripsi</th>
                         <th>Action</th>
                       </tr>
@@ -31,8 +31,8 @@
                         <th>Nama Siswa</th>                       
                         <th>Guru</th>
                         <th>Tanggal</th>
-                        <th>Waktu Mulai</th>                   
-                        <th>Waktu Berakhir</th>                   
+                        <th>Waktu Mulai</th>                                   
+                        <th>Waktu Pulang</th>                                   
                         <th>Deskripsi</th>   
                         <th>Action</th>
                       </tr>
@@ -80,10 +80,10 @@
                 },
                 {
                     data: 'time_in',
-                },          
+                },                                  
                 {
                     data: 'time_out',
-                },          
+                },                                  
                 {
                     data: 'description',
                 },          

@@ -42,6 +42,12 @@
       </a>
     </li>
     <li>
+      <a href="{{ route('reports.index') }}">
+        <i class="nc-icon nc-single-copy-04"></i>
+        <p>Laporan</p>
+      </a>
+    </li>
+    <li>
       <a href="{{route('internship-certificates.index')}}">
         <i class="nc-icon nc-trophy"></i>
         <p>Sertifikat</p>

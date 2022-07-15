@@ -5,10 +5,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title"> Tambah Pengajuan</h4>
+                        <h4 class="card-title"> Tambah Penempatan</h4>
                     </div>
                     <div class="card-body">
-                        <form id="createPengajuan" enctype="multipart/form-data">
+                        <form id="createPenempatan" enctype="multipart/form-data">
                             @csrf                   
                             <div class="form-group">
                                 <label>Nama Siswa</label>

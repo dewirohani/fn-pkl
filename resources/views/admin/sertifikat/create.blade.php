@@ -20,7 +20,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label>Guru Pembimbing</label>
                                  <select name="teacher_id" id="teacher_id" class="form-control teacher_id">
                                     <option value="" disabled="true">Pilih Siswa</option>
@@ -28,7 +28,7 @@
                                     <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Sertifikat</label>
                                 <input class="form-control" type="file" id="file" name="file">

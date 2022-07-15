@@ -8,7 +8,8 @@
                         <h4 class="card-title "> Tambah Attendance</h4>
                     </div>
                     <div class="card-body">    
-                        <form action="createAttendance">
+                        <form action="createA">
+                        @csrf
                             <div class="form-group ">
                                 <label>Nama Siswa</label>
                                 <select name="student_id" id="student_id" class="form-control student_id">
@@ -17,23 +18,22 @@
                                     <option value="{{ $student->id }}">{{ $student->name }}</option>
                                     @endforeach
                                 </select>
-                            </div>                                                    
-                            <div class="form-group">
-                                <label>Nama Guru</label>
-                                <select name="teacher_id" id="teacher_id" class="form-control teacher_id">
-                                    <option value="" disabled="true">Pilih Guru</option>
-                                    @foreach ($teachers as $teacher)
-                                    <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group" hidden>
+                            </div>                                                                              
+                            <div class="form-group" >
                                 <label>Tanggal</label>
                                 <input type="date" class="form-control" name="date" id="date">
                             </div> 
-                            <div class="form-group" hidden>
-                                <label>Waktu</label>
+                            <div class="form-group" >
+                                <label>Waktu Datang</label>
                                 <input type="time" class="form-control" name="time_in" id="time_in">
+                            </div> 
+                            <div class="form-group" >
+                                <label>Waktu Pulang</label>
+                                <input type="time" class="form-control" name="time_out" id="time_out">
+                            </div> 
+                            <div class="form-group" hidden >
+                                <label>Deskripsi</label>
+                                <input type="text" class="form-control" name="description" id="description">
                             </div> 
                             <div class="form-group">
                                 <button class="form-control" style="background-color:teal; color:white" name="submit" id="submit" type="submit">PRESENSI</button>                        
