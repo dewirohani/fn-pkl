@@ -19,16 +19,7 @@ use App\Http\Controllers\{
     InternshipReportController
 };
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
 // Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -104,49 +95,3 @@ Route::middleware(['authenticated'])->group(function (){
 //     Route::group(['middleware' => ['admin']], function () {
 //         Route::get('/home', [HomeController::class, 'index'])->name('home');
 //     });
-//     Route::resource('majors', MajorController::class);
-//     Route::resource('grades', GradeController::class);
-//     Route::resource('students', StudentController::class);
-//     Route::resource('teachers', TeacherController::class);
-//     Route::resource('periods', PeriodController::class);
-//     Route::resource('internship-places', InternshipPlaceController::class);
-//     Route::resource('internship-submissions', InternshipSubmissionController::class);
-//     Route::resource('internship-placements', InternshipPlacementController::class);
-//     Route::resource('internship-certificates', InternshipCertificateController::class);
-//     Route::resource('logbooks', LogbookController::class);
-//     Route::resource('attendances', AttendanceController::class);
-//     Route::get('profile/{$id}', [ProfileController::class, 'show']);
-// });
-
-// Route::group(['middleware' => ['authenticated', 'guru']], function () {
-//     Route::get('guru-view', 'HomeController@guruView')->name('guru.dashboard');
-//     Route::resource('majors', MajorController::class);
-//     Route::resource('grades', GradeController::class);
-//     Route::resource('students', StudentController::class);
-//     Route::resource('teachers', TeacherController::class);
-//     Route::resource('periods', PeriodController::class);
-//     Route::resource('internship-places', InternshipPlaceController::class);
-//     Route::resource('internship-submissions', InternshipSubmissionController::class);
-//     Route::resource('internship-placements', InternshipPlacementController::class);
-//     Route::resource('internship-certificates', InternshipCertificateController::class);
-//     Route::resource('logbooks', LogbookController::class);
-//     Route::resource('attendances', AttendanceController::class);
-//     Route::get('profile/{$id}', [ProfileController::class, 'show']);
-// });
-// Route::group(['middleware' => ['authenticated', 'siswa']], function () {
-//     Route::get('siswa-view', 'HomeController@siswaView')->name('siswa.dashboard');
-//     Route::resource('majors', MajorController::class);
-//     Route::resource('grades', GradeController::class);
-//     Route::resource('students', StudentController::class);
-//     Route::resource('teachers', TeacherController::class);
-//     Route::resource('periods', PeriodController::class);
-//     Route::resource('internship-places', InternshipPlaceController::class);
-//     Route::resource('internship-submissions', InternshipSubmissionController::class);
-//     Route::resource('internship-placements', InternshipPlacementController::class);
-//     Route::resource('internship-certificates', InternshipCertificateController::class);
-//     Route::resource('logbooks', LogbookController::class);
-//     Route::resource('attendances', AttendanceController::class);
-//     Route::get('profile/{$id}', [ProfileController::class, 'show']);
-// });
-
-

@@ -5,47 +5,33 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title "> Tambah Attendance</h4>
+                        <h4 class="card-title "> Edit Logbook</h4>
                     </div>
-                    <div class="card-body">                      
-                            <div class="form-group ">
-                                <label>Nama Siswa</label>
-                                <input type="text" class="form-control" name="nama_siswa" id="nama_siswa" placeholder="ex: Jhon">
-                            </div>                                                    
-                            {{-- <div class="form-group">
-                                <label>Tanggal</label>
-                                <input type="date" class="form-control" name="tanggal" id="tanggal">
-                            </div> --}}
-                            <div class="form-group" hidden>
-                                <label>Waktu</label>
-                                <input type="time" class="form-control" name="waktu" id="waktu">
+                    <div class="card-body">    
+                        <form id="editLogbook">
+                            @csrf
+                            @method('PUT')   
+                            <input type="text" id="id" hidden value="{{$logbook->id}}">                                                            
+                            <div class="form-group">
+                                <label>Kegiatan</label>
+                                <input type="text" class="form-control" name="activity" id="activity" value="{{$logbook->activity}}">
                             </div> 
                             <div class="form-group">
-                                <button class="form-control" style="background-color:teal; color:white" name="presensi" id="presensi">PRESENSI</button>                        
+                                <label>Status</label>
+                                <select name="status_id" id="status_id" class="form-control status_id">
+                                    <option value="" disabled="true">Pilih Status</option>
+                                    @foreach ($logbookStatuses as $status)
+                                    <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>                                           
+                            <div class="form-group">
+                                <button class="btn btn-info" id="submit" type="submit">Simpan</button>
                             </div>
-                            {{-- <div class="form-group">
-                                <label>Foto</label>
-                                <form action="#" method="post" enctype="multipart/form-data">
-                                    <br>
-                                    Select image to upload:
-                                    <input type="file" name="fileToUpload" id="foto">
-                                    <input type="submit" value="Upload Image" name="submit">
-                                  </form>
-                            </div> 
-                            <div class="form-group">
-                                <label>Signature</label>
-                                <form action="#" method="post" enctype="multipart/form-data">                                
-                                    Select signature to upload:
-                                    <input type="file" name="fileToUpload" id="signature">
-                                    <input type="submit" value="Upload Image" name="submit">
-                                  </form>
-                            </div>  --}}
-                                                
-                            {{-- <div class="form-group">
-                                <button class="btn btn-info" id="sbmbtn">Simpan</button>                        
-                            </div> --}}
+                        </form>
                     </div>
                 </div>
             </div>
-            @include('admin.attendance.scriptcreatedata')
+            @include('admin.logbook.scripteditdata')
+            
         @endsection

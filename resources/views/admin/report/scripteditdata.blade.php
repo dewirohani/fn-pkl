@@ -36,7 +36,7 @@
                                         toast.addEventListener('mouseleave', Swal.resumeTimer)
                                     },
                                     position: 'top-right'
-                                }).then((result) => {
+                                    }).then((result) => {
                                     // Reload the Page
                                     location.href = '/reports';
                                 })

@@ -2,7 +2,7 @@
 
 <script>
     $(document).ready(function () {
-    $("#createAtd").on('submit', function(event){
+    $("#createA").on('submit', function(event){
         
         event.preventDefault();
         let formData = new FormData(this);
