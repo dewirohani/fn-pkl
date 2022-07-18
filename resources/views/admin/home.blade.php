@@ -24,7 +24,7 @@
             <hr>
             <div class="stats">
               <i class="fa fa-refresh"></i>
-              Update Now
+              Update Now admin
             </div>
           </div>
         </div>

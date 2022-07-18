@@ -32,10 +32,6 @@
                                 <label>Waktu Pulang</label>
                                 <input type="time" class="form-control" name="time_out" id="time_out">
                             </div>  
-                            <div class="form-group" >
-                                <label>Deskripsi</label>
-                                <input type="text" class="form-control" name="description" id="description">
-                            </div>  
                                                              
                             <div class="form-group">
                                 <button class="btn btn-info" id="submit" type="submit">Simpan</button>

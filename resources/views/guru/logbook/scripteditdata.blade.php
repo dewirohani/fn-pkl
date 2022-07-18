@@ -38,7 +38,7 @@
                                     position: 'top-right'
                                 }).then((result) => {
                                     // Reload the Page
-                                    location.href = '/logbooks';
+                                    location.href = '/logbooks-guru';
                                 })
                         }
                     }, 

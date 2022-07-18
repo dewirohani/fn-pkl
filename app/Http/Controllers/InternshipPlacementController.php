@@ -15,6 +15,12 @@ class InternshipPlacementController extends Controller
      */
     public function index(Request $request)
     {
+        $user = \Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/user')->json();
+        $auth = json_decode(json_encode($user))->data;
         $data = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
@@ -57,7 +63,20 @@ class InternshipPlacementController extends Controller
                             ->addIndexColumn()
                             ->make(true);
             }
-            return view('admin.pkl.penempatan.index', compact('internshipPlacements'));
+            if ($auth->level_id == 3) {
+                $data = Http::withHeaders([
+                    'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+                    'ContentType' => 'application/json',
+                    'Accept' => 'application/json',
+                    ])->get('http://localhost/pa/backend/public/api'.'/internship-placements')->json();
+                    // dd($data);
+                    
+                    $internshipPlacements = json_decode(json_encode($data))->internshipPlacements;
+                    return view('siswa.pkl.penempatan.index', compact('internshipPlacements'));
+                }else{
+                   
+                    return view('admin.pkl.penempatan.index', compact('internshipPlacements'));
+                }
         // return view('admin.pkl.penempatan.index');
     }
 

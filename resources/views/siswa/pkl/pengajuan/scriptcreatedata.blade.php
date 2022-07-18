@@ -7,7 +7,7 @@
         event.preventDefault();
         let formData = new FormData(this);
                 $.ajax({
-                    url: "http://localhost/pa/backend/public/api/submissions",
+                    url: "http://localhost/pa/backend/public/api/submission-students",
                     type: "POST",
                     headers: {
                         'Accept':'*/*',
@@ -33,7 +33,7 @@
                                     position: 'top-right'
                                 }).then((result) => {
                                     // Reload the Page
-                                    location.href = '/internship-submissions';
+                                    location.href = '/internship-submissions-siswa';
                                 })
                             },
                             error: function(response, error){   

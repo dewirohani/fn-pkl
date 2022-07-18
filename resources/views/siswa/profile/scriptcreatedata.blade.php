@@ -2,12 +2,12 @@
 
 <script>
     $(document).ready(function () {
-    $("#createAtd").on('submit', function(event){
+    $("#createProfil").on('submit', function(event){
         
         event.preventDefault();
         let formData = new FormData(this);
                 $.ajax({
-                    url: "http://localhost/pa/backend/public/api/attendances-student",
+                    url: "http://localhost/pa/backend/public/api/profils",
                     type: "POST",
                     headers: {
                         'Accept':'*/*',
@@ -33,7 +33,7 @@
                                     position: 'top-right'
                                 }).then((result) => {
                                     // Reload the Page
-                                    location.href = '/attendances-siswa';
+                                    // location.href = '/internship-submissions-siswa/create';
                                 })
                             },
                             error: function(response, error){   

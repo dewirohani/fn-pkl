@@ -37,7 +37,7 @@
                                     position: 'top-right'
                                 }).then((result) => {
                                     // Reload the Page
-                                    location.href = '/places';
+                                    location.href = '/internship-places';
                                 })
                         }
                     }, 

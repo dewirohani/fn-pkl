@@ -6,8 +6,8 @@
                 <div class="card">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-dark">Logbook</h6>
-                        <a href="{{ route('logbooks-siswa.create') }}">
-                          <button class="btn btn-success mr-2" style="float: right"><i class="fa fa-plus">Tambah Logbook</i></button>
+                        <a href="{{ route('reports-siswa.create') }}">
+                          <button class="btn btn-success mr-2" style="float: right"><i class="fa fa-plus">Tambah Laporan</i></button>
                         </a>
                       </div>
                     <div class="card-body">
@@ -15,19 +15,19 @@
                        <table class="table table-strip">
                         <thead>
                             <tr>
-                                <th>Tanggal</th> 
-                                <th>Kegiatan</th> 
-                                <th>File</th> 
+                                <th>Nama Siswa</th> 
+                                <th>Nama Guru</th> 
+                                <th>Laporan</th> 
                                 <th>Status</th> 
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($logbooks as $logbook)
+                            @foreach ($internshipReports as $report)
                             <tr>
-                                <td>{{$logbook->date}}</td> 
-                                <td>{{$logbook->activity}}</td> 
-                                <td>{{$logbook->file}}</td> 
-                                <td>{{$logbook->logbook_statuses->name}}</td> 
+                                <td>{{$report->student->name}}</td> 
+                                <td>{{$report->teacher->name}}</td> 
+                                <td>{{$report->file}}</td> 
+                                <td>{{$report->status->name}}</td> 
                             </tr>
                             @endforeach
                         </tbody>
@@ -35,6 +35,6 @@
                     </div>
                 </div>
             </div>
-            @include('siswa.pkl.pengajuan.scriptcreatedata')
+            @include('siswa.report.scriptcreatedata')
           
         @endsection

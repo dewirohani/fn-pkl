@@ -8,13 +8,15 @@ use Http;
 
 class AttendanceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index(Request $request)
     {
+        $user = \Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/user')->json();
+        $auth = json_decode(json_encode($user))->data;
         $data = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
@@ -44,26 +46,89 @@ class AttendanceController extends Controller
                             })
                             ->addColumn('action', function($row){
 
-                                $btn = '<a href="'.route('attendances.edit', $row->id).'" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-warning btn-sm"><span><i class="fas fa-pen-square"></i></span></a>';
-                                $btn .='&nbsp';
-                                $btn .= '<a href="javascript:void(0)" data-toggle="tooltip" onclick="deleteItem(this)" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm"><span><i class="fas fa-trash"></i></a>';
+                                // $btn = '<a href="'.route('attendances.edit', $row->id).'" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-warning btn-sm"><span><i class="fas fa-pen-square"></i></span></a>';
+                                // $btn .='&nbsp';
+                                $btn = '<a href="javascript:void(0)" data-toggle="tooltip" onclick="deleteItem(this)" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm"><span><i class="fas fa-trash"></i></a>';
                                  return $btn;
                             })
                             ->rawColumns(['action'])
                             ->addIndexColumn()
                             ->make(true);
             }
-            return view('admin.attendance.index', compact('attendance'));
+           
+                if ($auth->level_id == 2){ 
+                    $data = Http::withHeaders([
+                        'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+                        'ContentType' => 'application/json',
+                        'Accept' => 'application/json',
+                        ])->get('http://localhost/pa/backend/public/api'.'/attendances')->json();
+                        
+                        $attendance = json_decode(json_encode($data))->attendance;
+                        if($request->ajax()){
+                            return DataTables::of($attendance)                          
+                                            ->addColumn('student_id', function($row){
+                                                return $row->student->name;
+                                            })
+                                            ->addColumn('teacher_id', function($row){
+                                                return $row->teacher->name;
+                                            })
+                                            ->addColumn('date', function($row){
+                                                return $row->date;
+                                            })
+                                            ->addColumn('time_in', function($row){
+                                                return $row->time_in;
+                                            })                          
+                                            ->addColumn('time_out', function($row){
+                                                return $row->time_out;
+                                            })                          
+                                            ->addColumn('description', function($row){
+                                                return $row->description;
+                                            })
+                                            ->addColumn('action', function($row){
+                
+                                                // $btn = '<a href="'.route('attendances.edit', $row->id).'" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-warning btn-sm"><span><i class="fas fa-pen-square"></i></span></a>';
+                                                // $btn .='&nbsp';
+                                                $btn = '<a href="javascript:void(0)" data-toggle="tooltip" onclick="deleteItem(this)" data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm"><span><i class="fas fa-trash"></i></a>';
+                                                 return $btn;
+                                            })
+                                            ->rawColumns(['action'])
+                                            ->addIndexColumn()
+                                            ->make(true);
+                            }
+                            return view('guru.attendance.index', compact('attendance'));
+                        }elseif ($auth->level_id == 3) {
+                            $data = Http::withHeaders([
+                                'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+                                'ContentType' => 'application/json',
+                                'Accept' => 'application/json',
+                                ])->get('http://localhost/pa/backend/public/api'.'/attendances-student')->json();
+                                $attendances = json_decode(json_encode($data))->attendances;
+                                // dd($data);
+                            $dataToday = Http::withHeaders([
+                                'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+                                'ContentType' => 'application/json',
+                                'Accept' => 'application/json',
+                                ])->get('http://localhost/pa/backend/public/api'.'/attendances-today')->json();
+                                $atd = json_decode(json_encode($dataToday))->atd;
+                        return view('siswa.attendance.index', compact('attendances','atd'));
+                            }else{
+                    return view('admin.attendance.index', compact('attendance'));
+                }
+            }
         // return view('admin.attendance.index');
-    }
+   
+    
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function create(Request $request)
     {
+        $user = \Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/user')->json();
+        $auth = json_decode(json_encode($user))->data;
+
         $dataStudent = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
@@ -76,7 +141,12 @@ class AttendanceController extends Controller
         //     'Accept' => 'application/json',
         //     ])->get('http://localhost/pa/backend/public/api/teachers')->json();
         //     $teachers = json_decode(json_encode($dataTeacher))->teachers;
-        return view('admin.attendance.create', compact('students'));
+        if ($auth->level_id == 1) {
+            // return view('admin.logbook.create', compact('students','teachers'));
+                return view('admin.attendance.create', compact('students'));            
+            } else if ($auth->level_id == 3){
+                return view('siswa.attendance.create', compact('students'));
+            }
         // return view('admin.attendance.create');
     }
 

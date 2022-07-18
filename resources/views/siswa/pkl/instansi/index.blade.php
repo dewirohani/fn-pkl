@@ -7,9 +7,9 @@
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-dark">Du/Di</h6>
-                  <a href="{{ route('internship-places.create') }}">
+                  {{-- <a href="{{ route('internship-places.create') }}">
                     <button class="btn btn-success mr-2" style="float: right"><i class="fa fa-plus"></i></button>
-                  </a>
+                  </a> --}}
                 </div>
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush" id="dataTable">
@@ -26,7 +26,7 @@
                         <th>Kuota</th>
                         <th>Waktu Masuk</th>
                         <th>Waktu Pulang</th>
-                        <th>Action</th>
+                        
                       </tr>
                     </thead>
                     <tfoot>
@@ -42,7 +42,7 @@
                         <th>Kuota</th>
                         <th>Waktu Masuk</th>
                         <th>Waktu Pulang</th>
-                        <th>Action</th>
+                        
                       </tr>
                     </tfoot>
                     <tbody>
@@ -63,7 +63,7 @@
             processing: true,
             serverSide: true,
             ajax: {
-                url: "{{ route('internship-places.index') }}",
+                url: "{{ route('internship-places-siswa.index') }}",
                 type: 'GET',
             },
             "responsive": true,
@@ -107,9 +107,7 @@
                 {
                     data: 'time_out',
                 },
-                {
-                    data: 'action',
-                },
+               
             ],
         });
     });

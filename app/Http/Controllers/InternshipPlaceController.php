@@ -15,6 +15,12 @@ class InternshipPlaceController extends Controller
      */
     public function index(Request $request)
     {
+        $user = \Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/user')->json();
+        $auth = json_decode(json_encode($user))->data;
         $data = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
@@ -66,7 +72,14 @@ class InternshipPlaceController extends Controller
                             ->addIndexColumn()
                             ->make(true);
             }
-            return view('admin.pkl.instansi.index', compact('internship_places'));
+            if ($auth->level_id == 1) {
+                return view('admin.pkl.instansi.index', compact('internship_places'));
+            } else if ($auth->level_id == 2){
+                return view('guru.pkl.instansi.index', compact('internship_places'));
+            } else if ($auth->level_id == 3){
+                return view('siswa.pkl.instansi.index', compact('internship_places'));
+            }
+            
         
     }
 
@@ -107,8 +120,8 @@ class InternshipPlaceController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/teachers'.$id.'/edit')->json();
-            // dd($data);
+            ])->get('http://localhost/pa/backend/public/api/teachers')->json();
+            // dd($dataTeachers);
             $teachers = json_decode(json_encode($dataTeachers))->teachers;
         
         return view('admin.pkl.instansi.edit', compact(

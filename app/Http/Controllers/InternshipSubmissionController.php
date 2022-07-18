@@ -15,6 +15,12 @@ class InternshipSubmissionController extends Controller
      */
     public function index(Request $request)
     {
+        $user = \Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/user')->json();
+        $auth = json_decode(json_encode($user))->data;
         $data = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
@@ -60,7 +66,20 @@ class InternshipSubmissionController extends Controller
                             ->addIndexColumn()
                             ->make(true);
             }
-            return view('admin.pkl.pengajuan.index', compact('internshipSubmissions'));
+            if ($auth->level_id == 3) {
+            $data = Http::withHeaders([
+                'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+                'ContentType' => 'application/json',
+                'Accept' => 'application/json',
+                ])->get('http://localhost/pa/backend/public/api'.'/submission-students')->json();
+                // dd($data);
+                
+                $internshipSubmission = json_decode(json_encode($data))->internshipSubmission;
+                // dd($internshipSubmission);
+                return view('siswa.pkl.pengajuan.index', compact('internshipSubmission'));
+            }else{
+                return view('admin.pkl.pengajuan.index', compact('internshipSubmissions'));
+            }
         // return view('admin.pkl.pengajuan.index');
     }
 
@@ -71,7 +90,12 @@ class InternshipSubmissionController extends Controller
      */
     public function create(Request $request)
     {
-     
+        $user = \Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/user')->json();
+        $auth = json_decode(json_encode($user))->data;
         $dataStudent = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
@@ -92,8 +116,14 @@ class InternshipSubmissionController extends Controller
             // dd($data);
             $internship_places = json_decode(json_encode($dataPlace))->internship_places;
        
-        return view('admin.pkl.pengajuan.create', compact('students','periods','internship_places'));
-        
+        if ($auth->level_id == 1) {                
+            return view('admin.pkl.pengajuan.create', compact('students','periods','internship_places'));
+        } else if ($auth->level_id == 2){
+            return view('guru.pkl.pengajuan.create', compact('students','periods','internship_places'));
+        } else if ($auth->level_id == 3){
+            return view('siswa.pkl.pengajuan.create', compact('students','periods','internship_places'));
+        }
+    
     }
 
     /**

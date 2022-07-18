@@ -2,30 +2,95 @@
 @section('content')
     <div class="content">
         <div class="row">
-            <div class="col-md-12">                
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title"> Data Attendance</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead class=" text-dark">
-                                    <th>#</th>
-                                    <th>Nama Siswa</th>
-                                    <th>Tanggal</th>
-                                    <th>Waktu</th>                                                                       
-                                    <th>Lokasi</th>                                                                                                       
-                                    <th>Foto</th>                                                                                                       
-                                    <th>Signature</th>                                                                                                       
-                                    <th>Action</th>
-                                </thead>
-                                <tbody class="attendance" id="attendance">                                  
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+            <!-- Datatables -->
+            <div class="col-lg-12">
+              <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-dark">Attendance</h6>
+                  {{-- <a href="{{ route('attendances.create') }}">
+                    <button class="btn btn-success mr-2" style="float: right"><i class="fa fa-plus"></i></button>
+                  </a> --}}
                 </div>
+                <div class="table-responsive p-3">
+                  <table class="table align-items-center table-flush" id="dataTable">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>#</th>
+                        <th>Nama Siswa</th>                       
+                        <th>Guru</th>
+                        <th>Tanggal</th>
+                        <th>Waktu Mulai</th>                                    
+                        <th>Waktu Pulang</th>                                    
+                        <th>Deskripsi</th>
+                        
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      <tr>
+                        <th>#</th>
+                        <th>Nama Siswa</th>                       
+                        <th>Guru</th>
+                        <th>Tanggal</th>
+                        <th>Waktu Mulai</th>                                   
+                        <th>Waktu Pulang</th>                                   
+                        <th>Deskripsi</th>   
+                        
+                      </tr>
+                    </tfoot>
+                    <tbody>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
-@include('guru.attendance.scriptgetdata') 
+          </div>
+    </div>
+    <script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
+    <script>
+    $(document).ready(function(){
+        // var api = "{{env('API_URL')}}";
+
+        $('#dataTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{ route('attendances-guru.index') }}",
+                type: 'GET',
+            },
+            "responsive": true,
+            "language": {
+                "oPaginate": {
+                    "sNext": "<i class='fas fa-angle-right'>",
+                    "sPrevious": "<i class='fas fa-angle-left'>",
+                },
+               
+            },
+            columns: [{
+                    data: 'DT_RowIndex',
+                },
+                {
+                    data: 'student_id',
+                },
+                {
+                    data: 'teacher_id',
+                },               
+                {
+                    data: 'date',
+                },
+                {
+                    data: 'time_in',
+                },                                  
+                {
+                    data: 'time_out',
+                },                                  
+                {
+                    data: 'description',
+                },          
+                
+            ],
+        });
+    });
+</script>     
+{{-- @include('guru.attendance.scriptdeletedata') --}}
 @endsection

@@ -7,7 +7,7 @@
         event.preventDefault();
         let formData = new FormData(this);
                 $.ajax({
-                    url: "http://localhost/pa/backend/public/api/logbooks",
+                    url: "http://localhost/pa/backend/public/api/logbooks-student",
                     type: "POST",
                     headers: {
                         'Accept':'*/*',
@@ -33,7 +33,7 @@
                                     position: 'top-right'
                                 }).then((result) => {
                                     // Reload the Page
-                                    location.href = '/logbooks';
+                                    location.href = '/logbooks-siswa';
                                 })
                             },
                             error: function(response, error){   

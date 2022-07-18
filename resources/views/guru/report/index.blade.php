@@ -6,35 +6,33 @@
             <div class="col-lg-12">
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-dark">Kelas</h6>
-                  <a href="{{ route('grades.create') }}">
-                    <button class="btn btn-success mr-2" style="float: right"><i class="fa fa-plus"></i></button>
-                  </a>
+                  <h6 class="m-0 font-weight-bold text-dark">Laporan</h6>                 
                 </div>
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush" id="dataTable">
                     <thead class="thead-light">
                       <tr>
                         <th>#</th>
-                        <th>Nama Kelas</th>
-                        <th>Jurusan</th>
-                        <th>Total Siswa</th>
+                        <th>Nama Siswa</th>
+                        <th>Guru</th>
+                        <th>Laporan</th>
                         <th>Deskripsi</th>
+                        <th>Status</th>                       
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tfoot>
                       <tr>
                         <th>#</th>
-                        <th>Nama Kelas</th>
-                        <th>Jurusan</th>
-                        <th>Total Siswa</th>
+                        <th>Nama Siswa</th>
+                        <th>Guru</th>
+                        <th>Laporan</th>
                         <th>Deskripsi</th>
+                        <th>Status</th>  
                         <th>Action</th>
                       </tr>
                     </tfoot>
                     <tbody>
-
                     </tbody>
                   </table>
                 </div>
@@ -51,7 +49,7 @@
             processing: true,
             serverSide: true,
             ajax: {
-                url: "{{ route('grades.index') }}",
+                url: "{{ route('reports-guru.index') }}",
                 type: 'GET',
             },
             "responsive": true,
@@ -66,17 +64,20 @@
                     data: 'DT_RowIndex',
                 },
                 {
-                    data: 'name',
+                    data: 'student_id',
+                },              
+                {
+                    data: 'teacher_id',
                 },
                 {
-                    data: 'major_id',
-                },
-                {
-                    data: 'total_students',
+                    data: 'file',
                 },
                 {
                     data: 'description',
                 },
+                {
+                    data: 'status_id',
+                },              
                 {
                     data: 'action',
                 },
@@ -84,5 +85,5 @@
         });
     });
 </script>     
-@include('admin.master.kelas.scriptdeletedata')
+
 @endsection

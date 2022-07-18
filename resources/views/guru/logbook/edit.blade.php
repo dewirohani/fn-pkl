@@ -14,7 +14,7 @@
                             <input type="text" id="id" hidden value="{{$logbook->id}}">                                                            
                             <div class="form-group">
                                 <label>Kegiatan</label>
-                                <input type="text" class="form-control" name="activity" id="activity" value="{{$logbook->activity}}">
+                                <input type="text" class="form-control" disabled value="{{$logbook->activity}}">
                             </div> 
                             <div class="form-group">
                                 <label>Status</label>

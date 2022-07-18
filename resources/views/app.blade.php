@@ -36,6 +36,15 @@
                 </a>
             </div>
             <div class="sidebar-wrapper">    
+                @php
+                $token = substr(\Request::Header('cookie'),'6',strpos(substr(\Request::Header('cookie'),'6'), ";"));
+                $user = \Http::withHeaders([
+                    'Authorization' => 'Bearer ' .$token,
+                    'ContentType' => 'application/json',
+                    'Accept' => 'application/json',
+                ])->get('http://localhost/pa/backend/public/api/user')->json();
+                $auth = json_decode(json_encode($user))->data;
+                @endphp
                 @include('menu')
             </div>
         </div>
@@ -70,16 +79,20 @@
                                 </div>
                             </div>
                         </form>
-                        <ul class="navbar-nav">                           
-                                <a class="nav-link" href="javascript:;">                                                                   
-                                        <i class="fa fa-user"></i> Dewi Rohani                                     
-                                </a>
-                        </ul>                      
-                        <ul class="navbar-nav">                            
-                                <a class="nav-link " href="javascript:;">                                                                    
-                                        <i class="fa fa-sign-out"></i>                                      
-                                </a>                                
-                        </ul>                      
+                        <ul class="navbar-nav">
+                        <li class="nav-item btn-rotate dropdown"> 
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user"></i><span class="ml-2 d-none d-lg-inline text-black small">{{ $auth->username }}</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">                                
+                                <a class="dropdown-item" href="#">Profile</a>
+                                <form id="logout">
+                                    @csrf
+                                    <button class="dropdown-item" type="submit" id="submit">Logout</button>
+                                </form>
+                            </div>
+                        </li>                                           
+                        </ul>
                     </div>
                 </div>
             </nav>
@@ -130,7 +143,35 @@
             return cookie[name];
         }
     </script>
-    
+    <script>
+    $("#logout").on('submit', function(event) {
+            event.preventDefault();
+            $(".preloader").fadeIn();
+
+            $.ajax({
+                url: "http://localhost/pa/backend/public/api/logout",
+                type: "POST",
+                headers: {
+                    'Authorization': 'Bearer ' + getCookie('token'),
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    $(".preloader").fadeOut();
+                    if (response.success) {
+                        window.location.href = "/home";
+                        document.cookie.split(";").forEach(function(c) {
+                            document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" +
+                                new Date().toUTCString() + ";path=/");
+                        });
+                    }
+                },
+            });
+        });
+    </script>
 </body>
 </html>
 

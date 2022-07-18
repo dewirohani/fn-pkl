@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <form id="createPengajuan" enctype="multipart/form-data">
                             @csrf                   
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label>Nama Siswa</label>
                                 <select name="student_id" id="student_id" class="form-control student_id">
                                     <option value="" disabled="true">Pilih Siswa</option>
@@ -18,7 +18,7 @@
                                     <option value="{{ $student->id }}">{{ $student->name }}</option>
                                     @endforeach
                                 </select>
-                            </div>                                                   
+                            </div>                                                    --}}
                             <div class="form-group">
                                 <label>Periode</label>
                                 <select name="period_id" id="period_id" class="form-control period_id">
@@ -49,6 +49,6 @@
                     </div>
                 </div>
             </div>
-            @include('admin.pkl.pengajuan.scriptcreatedata')
+            @include('siswa.pkl.pengajuan.scriptcreatedata')
           
         @endsection

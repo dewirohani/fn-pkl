@@ -10,15 +10,11 @@
                     <div class="card-body">  
                         <form id="createLogbook" enctype="multipart/form-data">
                             @csrf  
-                        <div class="form-group ">
+                        {{-- <div class="form-group ">
                             <label>Nama Siswa</label>
-                            <select name="student_id" id="student_id" class="form-control student_id">
-                                <option value="" disabled="true">Pilih Siswa</option>
-                                @foreach ($students as $student)
-                                <option value="{{ $student->id }}">{{ $student->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>                                                    
+                            
+                            <input type="text" class="form-control" name="student_id" id="student_id" >
+                        </div>                                                     --}}
                             <div class="form-group">
                                 <label>Tanggal</label>
                                 <input type="date" class="form-control" name="date" id="date">
@@ -41,4 +37,12 @@
             </div>
             @include('siswa.logbook.scriptcreatedata')
             
+            {{-- <script>
+$user = \Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/user')->json();
+        $auth = json_decode(json_encode($user))->data;
+            </script> --}}
         @endsection

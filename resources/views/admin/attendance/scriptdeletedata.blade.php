@@ -14,7 +14,7 @@
             if (result.isConfirmed) {
                 $.ajax({
                     type: 'POST',
-                    url: "http://localhost/pa/backend/public/api/logbooks/"+id,
+                    url: "http://localhost/pa/backend/public/api/attendances/"+id,
                     headers: {
                         'Accept':'*/*',
                         'Authorization':'Bearer '+ getCookie('token'),

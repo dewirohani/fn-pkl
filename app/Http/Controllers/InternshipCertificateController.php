@@ -8,21 +8,23 @@ use Http;
 
 class InternshipCertificateController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function index(Request $request)
     {
+        $user = \Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/user')->json();
+        $auth = json_decode(json_encode($user))->data;
         $data = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
             ])->get('http://localhost/pa/backend/public/api'.'/certificates')->json();
             // dd($data);
-            
-            $internship_certificate = json_decode(json_encode($data))->internship_certificate;
+        $internship_certificate = json_decode(json_encode($data))->internship_certificate;
+
         if($request->ajax()){
             return DataTables::of($internship_certificate)
                             ->addColumn('student_id', function($row){
@@ -48,15 +50,23 @@ class InternshipCertificateController extends Controller
                             ->addIndexColumn()
                             ->make(true);
             }
+            if($auth->level_id == 3){
+                $dataCert = Http::withHeaders([
+                    'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+                    'ContentType' => 'application/json',
+                    'Accept' => 'application/json',
+                    ])->get('http://localhost/pa/backend/public/api'.'/certificates')->json();
+                    // dd($dataCert);
+                    $internship_certificate = json_decode(json_encode($dataCert))->internship_certificate;
+                    // dd($internship_certificate);
+                return view('siswa.sertifikat.index', compact('internship_certificate'));
+            }
             return view('admin.sertifikat.index', compact('internship_certificate'));
+              
         // return view('admin.sertifikat.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function create(Request $request)
     {
         $dataStudent = Http::withHeaders([
@@ -74,34 +84,27 @@ class InternshipCertificateController extends Controller
         return view('admin.sertifikat.create', compact('students'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+ 
+    public function show(Request $request, $id)
     {
-        //
+        $data = Http::withHeaders([
+            'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+            'ContentType' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('http://localhost/pa/backend/public/api/certificates/'.$id)->json();
+            $certificates = json_decode(json_encode($data))->certificates;
+        return view('siswa.sertifikat.index', compact(
+            'certificates'
+        ));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function edit(Request $request, $id)
     {
         $data = Http::withHeaders([
@@ -109,19 +112,7 @@ class InternshipCertificateController extends Controller
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
             ])->get('http://localhost/pa/backend/public/api/certificates/'.$id.'/edit')->json();
-            $certificates = json_decode(json_encode($data))->certificates;
-        // $dataStudent = Http::withHeaders([
-        //     'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
-        //     'ContentType' => 'application/json',
-        //     'Accept' => 'application/json',
-        //     ])->get('http://localhost/pa/backend/public/api/students')->json();
-        //     $students = json_decode(json_encode($dataStudent))->students;
-        // $dataTeacher = Http::withHeaders([
-        //     'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
-        //     'ContentType' => 'application/json',
-        //     'Accept' => 'application/json',
-        //     ])->get('http://localhost/pa/backend/public/api/teachers')->json();
-        //     $teachers = json_decode(json_encode($dataTeacher))->teachers;
+            $certificates = json_decode(json_encode($data))->certificates;       
             return view('admin.sertifikat.edit', compact(
                 'certificates'
             ));

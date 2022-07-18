@@ -77,7 +77,7 @@
                   document.cookie = "token=" + response.token;
                   sessionStorage.setItem('success', response.message);
                   // console.log(document.cookie);
-                  window.location.href = "{{ route('home.index') }}";
+                  window.location.href = "{{ route('home') }}";
               }
           },
           error: function(response) {
@@ -94,35 +94,5 @@
   console.log(document.cookie);
   }
 </script>
-{{-- <script src="{{ asset('assets/plugins/jquery/jquery.min.js')}}"></script>
 
-<script>
-
-  function login(e) {
-    var results = '';
-  
-  var username = $("#username").val();
-  var password = $("#password").val();
-
-  var hasil = {
-    username: username,
-    password: password,
-  };
-    $.ajax({
-        type: "POST",
-        url: "http://127.0.0.1:8000/api/login",
-        data: JSON.stringify(hasil),
-        datatype: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-          console.log(data);
-                location.href = '/admin';
-            },
-        error: function (data) {
-          console.log(data);
-        }
-    })
-  };
-
-</script> --}}
 </html>

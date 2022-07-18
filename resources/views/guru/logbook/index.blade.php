@@ -6,17 +6,13 @@
             <div class="col-lg-12">
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-dark">Logbook</h6>
-                  <a href="{{ route('logbooks.create') }}">
-                    <button class="btn btn-success mr-2" style="float: right"><i class="fa fa-plus"></i></button>
-                  </a>
+                  <h6 class="m-0 font-weight-bold text-dark">Logbook</h6>               
                 </div>
                 <div class="table-responsive p-3">
                   <table class="table align-items-center table-flush" id="dataTable">
                     <thead class="thead-light">
                       <tr>
-                        <th>#</th>
-                        {{-- <th>Attendance</th> --}}
+                        <th>#</th>                        
                         <th>Nama Siswa</th>                      
                         <th>Guru</th>
                         <th>Tanggal</th>
@@ -27,8 +23,7 @@
                       </tr>
                     </thead>
                     <tfoot>
-                        <th>#</th>
-                        {{-- <th>Attendance</th> --}}
+                        <th>#</th>                        
                         <th>Nama Siswa</th>                      
                         <th>Guru</th>
                         <th>Tanggal</th>
@@ -55,7 +50,7 @@
             processing: true,
             serverSide: true,
             ajax: {
-                url: "{{ route('logbooks.index') }}",
+                url: "{{ route('logbooks-guru.index') }}",
                 type: 'GET',
             },
             "responsive": true,

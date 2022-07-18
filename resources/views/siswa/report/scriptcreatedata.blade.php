@@ -2,12 +2,12 @@
 
 <script>
     $(document).ready(function () {
-    $("#createAtd").on('submit', function(event){
+    $("#createLaporan").on('submit', function(event){
         
         event.preventDefault();
         let formData = new FormData(this);
                 $.ajax({
-                    url: "http://localhost/pa/backend/public/api/attendances-student",
+                    url: "http://localhost/pa/backend/public/api/reports-student",
                     type: "POST",
                     headers: {
                         'Accept':'*/*',
@@ -33,7 +33,7 @@
                                     position: 'top-right'
                                 }).then((result) => {
                                     // Reload the Page
-                                    location.href = '/attendances-siswa';
+                                    location.href = '/reports-siswa';
                                 })
                             },
                             error: function(response, error){   
