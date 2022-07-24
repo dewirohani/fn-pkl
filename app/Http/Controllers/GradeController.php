@@ -19,7 +19,7 @@ class GradeController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://192.168.43.202:8000/api'.'/grades')->json();
+            ])->get('http://192.168.43.215:8000/api'.'/grades')->json();
             $grades = json_decode(json_encode($data))->grades;
             // dd($grades);
         if($request->ajax()){
@@ -62,7 +62,7 @@ class GradeController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://192.168.43.202:8000/api/majors')->json();
+            ])->get('http://192.168.43.215:8000/api/majors')->json();
             $majors = json_decode(json_encode($data))->majors;
         return view('admin.master.kelas.create', compact('majors'));
     }
@@ -89,7 +89,7 @@ class GradeController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://192.168.43.202:8000/api/grades/'.$id.'/edit')->json();
+            ])->get('http://192.168.43.215:8000/api/grades/'.$id.'/edit')->json();
 
             $grade = json_decode(json_encode($data))->grade;
             // dd($grade);
@@ -97,7 +97,7 @@ class GradeController extends Controller
                 'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                 'ContentType' => 'application/json',
                 'Accept' => 'application/json',
-                ])->get('http://192.168.43.202:8000/api/majors')->json();
+                ])->get('http://192.168.43.215:8000/api/majors')->json();
                 $majors = json_decode(json_encode($dataMajor))->majors;
         
         return view('admin.master.kelas.edit', compact(

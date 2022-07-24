@@ -19,7 +19,7 @@ class TeacherController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://192.168.43.202:8000/api'.'/teachers')->json();
+            ])->get('http://192.168.43.215:8000/api'.'/teachers')->json();
             // dd($data);
             $teachers = json_decode(json_encode($data))->teachers;
         if($request->ajax()){
@@ -114,7 +114,7 @@ class TeacherController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://192.168.43.202:8000/api/teachers/'.$id.'/edit')->json();
+            ])->get('http://192.168.43.215:8000/api/teachers/'.$id.'/edit')->json();
             $teacher = json_decode(json_encode($data))->teacher;
             // dd($teacher);
         

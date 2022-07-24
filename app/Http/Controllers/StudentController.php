@@ -19,7 +19,7 @@ class StudentController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://192.168.43.202:8000/api'.'/students')->json();
+            ])->get('http://192.168.43.215:8000/api'.'/students')->json();
             // dd($data);
             $students = json_decode(json_encode($data))->students;
         if($request->ajax()){
@@ -91,7 +91,7 @@ class StudentController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://192.168.43.202:8000/api/grades')->json();
+            ])->get('http://192.168.43.215:8000/api/grades')->json();
             $grades = json_decode(json_encode($data))->grades;
         return view('admin.master.siswa.create', compact('grades'));
     }
@@ -130,7 +130,7 @@ class StudentController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://192.168.43.202:8000/api/students/'.$id.'/edit')->json();
+            ])->get('http://192.168.43.215:8000/api/students/'.$id.'/edit')->json();
             $student = json_decode(json_encode($data))->student;
             // dd($student);
         

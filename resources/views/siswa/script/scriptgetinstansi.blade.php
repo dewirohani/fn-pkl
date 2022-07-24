@@ -14,7 +14,7 @@
     $(document).ready(function(){
         $.ajax({
             type:'GET',
-            url:'http://192.168.43.202:8000/api/places',
+            url:'http://192.168.43.215:8000/api/places',
             headers: {
             'Accept':'*/*',
             'Authorization':'Bearer '+ getCookie('token'),

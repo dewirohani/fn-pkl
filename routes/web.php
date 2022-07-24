@@ -18,13 +18,15 @@ use App\Http\Controllers\{
     ProfileController,
     InternshipReportController
 };
+// use Http;
+use Illuminate\Http\Request;
 
-Route::get('/login', function () {
+Route::get('/login', function (Request $request) {
     $auth = Http::withHeaders([
-        'Authorization' => 'Bearer '.request()->cookie('token'),
+        'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
         'ContentType' => 'application/json',
         'Accept' => 'application/json',
-    ])->get('http://192.168.43.202:8000/api/user')->json();
+    ])->get('http://192.168.43.215:8000/api/user')->json();
     if ($auth['message'] != "Authenticated.") {
         return view('auth.login');
     }else{

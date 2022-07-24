@@ -19,7 +19,7 @@ class PeriodController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://192.168.43.202:8000/api'.'/periods')->json();
+            ])->get('http://192.168.43.215:8000/api'.'/periods')->json();
             $periods = json_decode(json_encode($data))->periods;
             // dd($data);
         if($request->ajax()){
@@ -63,7 +63,7 @@ class PeriodController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://192.168.43.202:8000/api/period-statuses')->json();
+            ])->get('http://192.168.43.215:8000/api/period-statuses')->json();
             // dd($data);   
             $periodStatuses = json_decode(json_encode($data))->periodStatuses;
         return view('admin.pkl.periode.create', compact('periodStatuses'));
@@ -93,7 +93,7 @@ class PeriodController extends Controller
         //     'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
         //     'ContentType' => 'application/json',
         //     'Accept' => 'application/json',
-        //     ])->get('http://192.168.43.202:8000/api/period-statuses')->json();
+        //     ])->get('http://192.168.43.215:8000/api/period-statuses')->json();
         //     // dd($data);   
         //     $periodStatuses = json_decode(json_encode($data))->periodStatuses;
         // return view('admin.pkl.periode.edit', compact('periodStatuses'));
@@ -111,14 +111,14 @@ class PeriodController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://192.168.43.202:8000/api/periods/'.$id.'/edit')->json();
+            ])->get('http://192.168.43.215:8000/api/periods/'.$id.'/edit')->json();
             $period = json_decode(json_encode($data))->period;
             // dd($period);
             $dataStatuses = Http::withHeaders([
                 'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                 'ContentType' => 'application/json',
                 'Accept' => 'application/json',
-                ])->get('http://192.168.43.202:8000/api/period-statuses')->json();
+                ])->get('http://192.168.43.215:8000/api/period-statuses')->json();
                 // dd($data);
                 $periodStatuses = json_decode(json_encode($dataStatuses))->periodStatuses;
         

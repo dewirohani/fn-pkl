@@ -7,7 +7,7 @@
         event.preventDefault();
         let formData = new FormData(this);
                 $.ajax({
-                    url: "http://192.168.43.202:8000/api/submission-students",
+                    url: "http://192.168.43.215:8000/api/submission-students",
                     type: "POST",
                     headers: {
                         'Accept':'*/*',

@@ -19,13 +19,13 @@ class InternshipPlaceController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://192.168.43.202:8000/api/user')->json();
+            ])->get('http://192.168.43.215:8000/api/user')->json();
         $auth = json_decode(json_encode($user))->data;
         $data = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://192.168.43.202:8000/api'.'/places')->json();
+            ])->get('http://192.168.43.215:8000/api'.'/places')->json();
             // dd($data);
             $internship_places = json_decode(json_encode($data))->internship_places;
         if($request->ajax()){
@@ -90,7 +90,7 @@ class InternshipPlaceController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://192.168.43.202:8000/api/teachers')->json();
+            ])->get('http://192.168.43.215:8000/api/teachers')->json();
             $teachers = json_decode(json_encode($data))->teachers;
         return view('admin.pkl.instansi.create', compact('teachers'));
         
@@ -112,7 +112,7 @@ class InternshipPlaceController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://192.168.43.202:8000/api/places/'.$id.'/edit')->json();
+            ])->get('http://192.168.43.215:8000/api/places/'.$id.'/edit')->json();
             // dd($data);
             $place = json_decode(json_encode($data))->place;
             // dd($place);
@@ -120,7 +120,7 @@ class InternshipPlaceController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://192.168.43.202:8000/api/teachers')->json();
+            ])->get('http://192.168.43.215:8000/api/teachers')->json();
             // dd($dataTeachers);
             $teachers = json_decode(json_encode($dataTeachers))->teachers;
         

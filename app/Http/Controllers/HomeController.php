@@ -13,7 +13,7 @@ class HomeController extends Controller
         'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6',strpos(substr($request->Header('cookie'),'6'), ";")),
         'ContentType' => 'application/json',
         'Accept' => 'application/json',
-    ])->get('http://192.168.43.202:8000/api/user')->json();
+    ])->get('http://192.168.43.215:8000/api/user')->json();
     // dd($user);
     $auth = json_decode(json_encode($user))->data;
     

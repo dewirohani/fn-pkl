@@ -14,7 +14,7 @@
             if (result.isConfirmed) {
                 $.ajax({
                     type: 'POST',
-                    url: "http://192.168.43.202:8000/api/reports/"+id,
+                    url: "http://192.168.43.215:8000/api/reports/"+id,
                     headers: {
                         'Accept':'*/*',
                         'Authorization':'Bearer '+ getCookie('token'),

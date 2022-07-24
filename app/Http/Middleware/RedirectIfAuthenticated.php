@@ -24,7 +24,7 @@ class RedirectIfAuthenticated
             'Authorization' => 'Bearer '.$request->cookie('token'),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-        ])->get('http://192.168.43.202:8000/api/user')->json();
+        ])->get('http://192.168.43.215:8000/api/user')->json();
         if ($auth['message'] != "Authenticated.") {
             return redirect()->to('/login');
         }

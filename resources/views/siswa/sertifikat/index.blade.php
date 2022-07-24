@@ -22,7 +22,7 @@
                             <tr>
                                 <td>{{$certificate->student->name}}</td> 
                                 {{-- <td>{{$certificate->file}}</td>   --}}
-                                <td><a href="http://192.168.43.202:8000/{{$certificate->file}}" data-toggle="tooltip" data-original-title="View" class="edit btn btn-dark btn-sm"><span><i class="fas fa-download"></i></span></a></td>                                                
+                                <td><a href="http://192.168.43.215:8000/{{$certificate->file}}" data-toggle="tooltip" data-original-title="View" class="edit btn btn-dark btn-sm"><span><i class="fas fa-download"></i></span></a></td>                                                
                             </tr>
                             @endforeach
                         </tbody>

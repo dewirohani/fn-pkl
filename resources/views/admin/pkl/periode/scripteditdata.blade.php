@@ -9,7 +9,7 @@
             // let id = e.getAttribute('data-id');
             let formData = new FormData(this);
                 $.ajax({
-                    url: "http://192.168.43.202:8000/api/periods/"+id,
+                    url: "http://192.168.43.215:8000/api/periods/"+id,
                     type: "POST",
                     headers: {
                         'Accept':'*/*',
