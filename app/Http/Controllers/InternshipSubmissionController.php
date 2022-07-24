@@ -19,13 +19,13 @@ class InternshipSubmissionController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/user')->json();
+            ])->get('http://192.168.43.202:8000/api/user')->json();
         $auth = json_decode(json_encode($user))->data;
         $data = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api'.'/submissions')->json();
+            ])->get('http://192.168.43.202:8000/api'.'/submissions')->json();
             // dd($data);
             
             $internshipSubmissions = json_decode(json_encode($data))->internshipSubmissions;
@@ -71,7 +71,7 @@ class InternshipSubmissionController extends Controller
                 'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                 'ContentType' => 'application/json',
                 'Accept' => 'application/json',
-                ])->get('http://localhost/pa/backend/public/api'.'/submission-students')->json();
+                ])->get('http://192.168.43.202:8000/api'.'/submission-students')->json();
                 // dd($data);
                 
                 $internshipSubmission = json_decode(json_encode($data))->internshipSubmission;
@@ -94,25 +94,25 @@ class InternshipSubmissionController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/user')->json();
+            ])->get('http://192.168.43.202:8000/api/user')->json();
         $auth = json_decode(json_encode($user))->data;
         $dataStudent = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/students')->json();
+            ])->get('http://192.168.43.202:8000/api/students')->json();
             $students = json_decode(json_encode($dataStudent))->students;
         $dataPeriod = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api'.'/periods')->json();
+            ])->get('http://192.168.43.202:8000/api'.'/periods')->json();
             $periods = json_decode(json_encode($dataPeriod))->periods;
         $dataPlace = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api'.'/places')->json();
+            ])->get('http://192.168.43.202:8000/api'.'/places')->json();
             // dd($data);
             $internship_places = json_decode(json_encode($dataPlace))->internship_places;
        
@@ -154,14 +154,14 @@ class InternshipSubmissionController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/submissions/'.$id.'/edit')->json();
+            ])->get('http://192.168.43.202:8000/api/submissions/'.$id.'/edit')->json();
             // dd($data);
             $submission = json_decode(json_encode($data))->submission;
         $dataStatuses = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/submissions-statuses')->json();
+            ])->get('http://192.168.43.202:8000/api/submissions-statuses')->json();
             // dd($data);
             $internshipSubmissionStatus = json_decode(json_encode($dataStatuses))->internshipSubmissionStatus;
         

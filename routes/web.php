@@ -24,7 +24,7 @@ Route::get('/login', function () {
         'Authorization' => 'Bearer '.request()->cookie('token'),
         'ContentType' => 'application/json',
         'Accept' => 'application/json',
-    ])->get('http://localhost/pa/backend/public/api/user')->json();
+    ])->get('http://192.168.43.202:8000/api/user')->json();
     if ($auth['message'] != "Authenticated.") {
         return view('auth.login');
     }else{
@@ -39,6 +39,7 @@ Route::middleware(['authenticated'])->group(function (){
     Route::get('/internship-places-siswa', [InternshipPlaceController::class, 'index'])->name('internship-places-siswa.index');
     Route::get('/logbooks-siswa', [LogbookController::class, 'index'])->name('logbooks-siswa.index');
     Route::get('/logbooks-siswa/create', [LogbookController::class, 'create'])->name('logbooks-siswa.create');
+    Route::get('/logbooks-siswa/{id?}/edit', [LogbookController::class, 'edit'])->name('logbooks-siswa.edit');
 
     Route::get('/internship-submissions-siswa', [InternshipSubmissionController::class, 'index'])->name('internship-submissions-siswa.index');
     Route::get('/internship-submissions-siswa/create', [InternshipSubmissionController::class, 'create'])->name('internship-submissions-siswa.create');

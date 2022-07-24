@@ -19,13 +19,19 @@ class TeacherController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api'.'/teachers')->json();
+            ])->get('http://192.168.43.202:8000/api'.'/teachers')->json();
             // dd($data);
             $teachers = json_decode(json_encode($data))->teachers;
         if($request->ajax()){
             return DataTables::of($teachers)
                             ->addColumn('nip', function($row){
                                 return $row->nip;
+                            })
+                            ->addColumn('username', function($row){
+                                return $row->user->username;
+                            })
+                            ->addColumn('email', function($row){
+                                return $row->user->email;
                             })
                             ->addColumn('name', function($row){
                                 return $row->name;
@@ -108,7 +114,7 @@ class TeacherController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/teachers/'.$id.'/edit')->json();
+            ])->get('http://192.168.43.202:8000/api/teachers/'.$id.'/edit')->json();
             $teacher = json_decode(json_encode($data))->teacher;
             // dd($teacher);
         

@@ -42,7 +42,7 @@
                     'Authorization' => 'Bearer ' .$token,
                     'ContentType' => 'application/json',
                     'Accept' => 'application/json',
-                ])->get('http://localhost/pa/backend/public/api/user')->json();
+                ])->get('http://192.168.43.202:8000/api/user')->json();
                 $auth = json_decode(json_encode($user))->data;
                 @endphp
                 @include('menu')
@@ -149,7 +149,7 @@
             $(".preloader").fadeIn();
 
             $.ajax({
-                url: "http://localhost/pa/backend/public/api/logout",
+                url: "http://192.168.43.202:8000/api/logout",
                 type: "POST",
                 headers: {
                     'Authorization': 'Bearer ' + getCookie('token'),

@@ -15,13 +15,13 @@ class InternshipCertificateController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/user')->json();
+            ])->get('http://192.168.43.202:8000/api/user')->json();
         $auth = json_decode(json_encode($user))->data;
         $data = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api'.'/certificates')->json();
+            ])->get('http://192.168.43.202:8000/api'.'/certificates')->json();
             // dd($data);
         $internship_certificate = json_decode(json_encode($data))->internship_certificate;
 
@@ -34,7 +34,7 @@ class InternshipCertificateController extends Controller
                                 return $row->teacher->name;
                             })                            
                             ->addColumn('file', function($row){
-                                $btnfile = '<a href="'.$row->file.'" data-toggle="tooltip" data-original-title="View" class="edit btn btn-dark btn-sm"><span><i class="fas fa-download"></i></span></a>';
+                                $btnfile = '<a href="http://192.168.43.202:8000/'.$row->file.'" data-toggle="tooltip" data-original-title="View" class="edit btn btn-dark btn-sm"><span><i class="fas fa-download"></i></span></a>';
                                 return $btnfile;
                             })
                             ->addColumn('action', function($row){
@@ -55,7 +55,7 @@ class InternshipCertificateController extends Controller
                     'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                     'ContentType' => 'application/json',
                     'Accept' => 'application/json',
-                    ])->get('http://localhost/pa/backend/public/api'.'/certificates')->json();
+                    ])->get('http://192.168.43.202:8000/api'.'/certificates')->json();
                     // dd($dataCert);
                     $internship_certificate = json_decode(json_encode($dataCert))->internship_certificate;
                     // dd($internship_certificate);
@@ -73,14 +73,8 @@ class InternshipCertificateController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/students')->json();
+            ])->get('http://192.168.43.202:8000/api/students')->json();
             $students = json_decode(json_encode($dataStudent))->students;
-        // $dataTeacher = Http::withHeaders([
-        //     'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
-        //     'ContentType' => 'application/json',
-        //     'Accept' => 'application/json',
-        //     ])->get('http://localhost/pa/backend/public/api/teachers')->json();
-        //     $teachers = json_decode(json_encode($dataTeacher))->teachers;
         return view('admin.sertifikat.create', compact('students'));
     }
 
@@ -97,7 +91,7 @@ class InternshipCertificateController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/certificates/'.$id)->json();
+            ])->get('http://192.168.43.202:8000/api/certificates/'.$id)->json();
             $certificates = json_decode(json_encode($data))->certificates;
         return view('siswa.sertifikat.index', compact(
             'certificates'
@@ -111,7 +105,7 @@ class InternshipCertificateController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/certificates/'.$id.'/edit')->json();
+            ])->get('http://192.168.43.202:8000/api/certificates/'.$id.'/edit')->json();
             $certificates = json_decode(json_encode($data))->certificates;       
             return view('admin.sertifikat.edit', compact(
                 'certificates'

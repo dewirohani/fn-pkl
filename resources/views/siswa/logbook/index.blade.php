@@ -19,6 +19,7 @@
                                 <th>Kegiatan</th> 
                                 <th>File</th> 
                                 <th>Status</th> 
+                                <th>Action</th> 
                             </tr>
                         </thead>
                         <tbody>
@@ -28,6 +29,7 @@
                                 <td>{{$logbook->activity}}</td> 
                                 <td>{{$logbook->file}}</td> 
                                 <td>{{$logbook->logbook_statuses->name}}</td> 
+                                <td><a href="/logbooks-siswa/{{ $logbook->id }}/edit"><button class="edit btn btn-warning btn-sm"><i class="fas fa-pen-square"></i></button></a></td> 
                             </tr>
                             @endforeach
                         </tbody>

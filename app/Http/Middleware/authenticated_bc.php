@@ -21,7 +21,7 @@ class authenticated
             'Authorization' => 'Bearer '.$request->cookie('token'),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-        ])->get('http://localhost/pa/backend/public/api/user')->json();
+        ])->get('http://192.168.43.202:8000/api/user')->json();
         if ($auth['message'] != "Authenticated.") {
             return redirect()->to('/login');
         }

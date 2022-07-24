@@ -14,7 +14,7 @@
             if (result.isConfirmed) {
                 $.ajax({
                     type: 'POST',
-                    url: "http://localhost/pa/backend/public/api/submissions/"+id,
+                    url: "http://192.168.43.202:8000/api/submissions/"+id,
                     headers: {
                         'Accept':'*/*',
                         'Authorization':'Bearer '+ getCookie('token'),

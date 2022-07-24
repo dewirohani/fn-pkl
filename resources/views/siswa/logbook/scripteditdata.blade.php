@@ -1,14 +1,14 @@
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js')}}"></script>
 
 <script>
-        $("#editLogbook").on('submit', function(event){
+        $("#editLb").on('submit', function(event){
             event.preventDefault();
             $(".preloader").fadeIn();
             let id = $('#id').val();
             // let id = e.getAttribute('data-id');
             let formData = new FormData(this);
                 $.ajax({
-                    url: "http://192.168.43.202:8000/api/logbooks/"+id,
+                    url: "http://192.168.43.202:8000/api/logbooks-student/"+id,
                     type: "POST",
                     headers: {
                         'Accept':'*/*',
@@ -38,7 +38,7 @@
                                     position: 'top-right'
                                 }).then((result) => {
                                     // Reload the Page
-                                    location.href = '/logbooks';
+                                    location.href = '/logbooks-siswa';
                                 })
                         }
                     }, 

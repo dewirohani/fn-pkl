@@ -15,13 +15,13 @@ class AttendanceController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/user')->json();
+            ])->get('http://192.168.43.202:8000/api/user')->json();
         $auth = json_decode(json_encode($user))->data;
         $data = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api'.'/attendances')->json();
+            ])->get('http://192.168.43.202:8000/api'.'/attendances')->json();
             
             $attendance = json_decode(json_encode($data))->attendance;
         if($request->ajax()){
@@ -61,7 +61,7 @@ class AttendanceController extends Controller
                         'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                         'ContentType' => 'application/json',
                         'Accept' => 'application/json',
-                        ])->get('http://localhost/pa/backend/public/api'.'/attendances')->json();
+                        ])->get('http://192.168.43.202:8000/api'.'/attendances')->json();
                         
                         $attendance = json_decode(json_encode($data))->attendance;
                         if($request->ajax()){
@@ -101,14 +101,14 @@ class AttendanceController extends Controller
                                 'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                                 'ContentType' => 'application/json',
                                 'Accept' => 'application/json',
-                                ])->get('http://localhost/pa/backend/public/api'.'/attendances-student')->json();
+                                ])->get('http://192.168.43.202:8000/api'.'/attendances-student')->json();
                                 $attendances = json_decode(json_encode($data))->attendances;
                                 // dd($data);
                             $dataToday = Http::withHeaders([
                                 'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                                 'ContentType' => 'application/json',
                                 'Accept' => 'application/json',
-                                ])->get('http://localhost/pa/backend/public/api'.'/attendances-today')->json();
+                                ])->get('http://192.168.43.202:8000/api'.'/attendances-today')->json();
                                 $atd = json_decode(json_encode($dataToday))->atd;
                         return view('siswa.attendance.index', compact('attendances','atd'));
                             }else{
@@ -126,20 +126,20 @@ class AttendanceController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/user')->json();
+            ])->get('http://192.168.43.202:8000/api/user')->json();
         $auth = json_decode(json_encode($user))->data;
 
         $dataStudent = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/students')->json();
+            ])->get('http://192.168.43.202:8000/api/students')->json();
             $students = json_decode(json_encode($dataStudent))->students;
         // $dataTeacher = Http::withHeaders([
         //     'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
         //     'ContentType' => 'application/json',
         //     'Accept' => 'application/json',
-        //     ])->get('http://localhost/pa/backend/public/api/teachers')->json();
+        //     ])->get('http://192.168.43.202:8000/api/teachers')->json();
         //     $teachers = json_decode(json_encode($dataTeacher))->teachers;
         if ($auth->level_id == 1) {
             // return view('admin.logbook.create', compact('students','teachers'));

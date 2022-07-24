@@ -52,7 +52,7 @@
     <div class="dropdown-menu align" style="width: 75%;" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" style="color:black" href="{{ route('internship-places-siswa.index') }}"><span> {{ __("Data Instansi") }}</span></a>
             <a class="dropdown-item" style="color:black" href="{{ route('internship-submissions-siswa.create') }}"><span> {{ __("Pengajuan PKL") }} </span></a>
-            <a class="dropdown-item" style="color:black" href="{{ route('internship-placements-siswa.index') }}"><span> {{ __("Data Penempatan") }} </span></a>
+            {{-- <a class="dropdown-item" style="color:black" href="{{ route('internship-placements-siswa.index') }}"><span> {{ __("Data Penempatan") }} </span></a> --}}
       </div>
   </li>
   <li>

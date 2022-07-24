@@ -14,7 +14,7 @@
     $(document).ready(function(){
         $.ajax({
             type:'GET',
-            url:'http://localhost/pa/backend/public/api/majors',
+            url:'http://192.168.43.202:8000/api/majors',
             headers: {
             'Accept':'*/*',
             'Authorization':'Bearer '+ getCookie('token'),

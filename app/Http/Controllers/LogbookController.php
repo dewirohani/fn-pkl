@@ -16,14 +16,14 @@ class LogbookController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/user')->json();
+            ])->get('http://192.168.43.202:8000/api/user')->json();
         $auth = json_decode(json_encode($user))->data;
         if($auth->level_id == 1){
         $data = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api'.'/logbooks')->json();
+            ])->get('http://192.168.43.202:8000/api'.'/logbooks')->json();
             
             $logbooks = json_decode(json_encode($data))->logbooks;
             
@@ -66,7 +66,7 @@ class LogbookController extends Controller
                     'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                     'ContentType' => 'application/json',
                     'Accept' => 'application/json',
-                    ])->get('http://localhost/pa/backend/public/api'.'/logbooks')->json();
+                    ])->get('http://192.168.43.202:8000/api'.'/logbooks')->json();
                     // dd($data);
                                         
                     $logbooks = json_decode(json_encode($data))->logbooks;
@@ -93,7 +93,7 @@ class LogbookController extends Controller
                                     })
                                     ->addColumn('action', function($row){
         
-                                        $btn = '<a href="'.route('logbooks-guru.edit', $row->id).'" data-toggle="tooltip" data-original-title="Edit" class="edit btn btn-warning btn-sm"><span><i class="fas fa-pen-square"></i></span></a>';
+                                        $btn = '<a href="'.route('logbooks-guru.edit', $row->id).'" data-toggle="tooltip" data-original-title="Edit"class="edit btn btn-warning btn-sm"><span><i class="fas fa-pen-square"></i></span></a>';
                                         
                                          return $btn;
                                     })
@@ -108,7 +108,7 @@ class LogbookController extends Controller
                             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                             'ContentType' => 'application/json',
                             'Accept' => 'application/json',
-                            ])->get('http://localhost/pa/backend/public/api'.'/logbooks')->json();
+                            ])->get('http://192.168.43.202:8000/api'.'/logbooks')->json();
                             // dd($data);
                                                 
                             $logbooks = json_decode(json_encode($data))->logbooks;
@@ -123,20 +123,20 @@ class LogbookController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/user')->json();
+            ])->get('http://192.168.43.202:8000/api/user')->json();
         $auth = json_decode(json_encode($user))->data;
 
         $dataStudent = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/students')->json();
+            ])->get('http://192.168.43.202:8000/api/students')->json();
             $students = json_decode(json_encode($dataStudent))->students;
         $dataTeacher = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/teachers')->json();
+            ])->get('http://192.168.43.202:8000/api/teachers')->json();
             $teachers = json_decode(json_encode($dataTeacher))->teachers;
 
             if ($auth->level_id == 1) {
@@ -163,32 +163,54 @@ class LogbookController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/user')->json();
+            ])->get('http://192.168.43.202:8000/api/user')->json();
         $auth = json_decode(json_encode($user))->data;
-
+        if ($auth->level_id == 1) {                         
         $data = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/logbooks/'.$id.'/edit')->json();
+            ])->get('http://192.168.43.202:8000/api/logbooks/'.$id.'/edit')->json();
             // dd($data);
             $logbook = json_decode(json_encode($data))->logbook;
             $dataStatuses = Http::withHeaders([
                 'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                 'ContentType' => 'application/json',
                 'Accept' => 'application/json',
-                ])->get('http://localhost/pa/backend/public/api/logbook-statuses')->json();
+                ])->get('http://192.168.43.202:8000/api/logbook-statuses')->json();
                 // dd($data);
                 $logbookStatuses = json_decode(json_encode($dataStatuses))->logbookStatuses;
                 
-                if ($auth->level_id == 2) {
+                return view('admin.logbook.edit', compact('logbook','logbookStatuses'));                
+            } else if ($auth->level_id == 2) {
+                $data = Http::withHeaders([
+                    'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+                    'ContentType' => 'application/json',
+                    'Accept' => 'application/json',
+                    ])->get('http://192.168.43.202:8000/api/logbooks/'.$id.'/edit')->json();
+                    // dd($data);
+                    $logbook = json_decode(json_encode($data))->logbook;
+                    $dataStatuses = Http::withHeaders([
+                        'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+                        'ContentType' => 'application/json',
+                        'Accept' => 'application/json',
+                        ])->get('http://192.168.43.202:8000/api/logbook-statuses')->json();
+                        // dd($data);
+                        $logbookStatuses = json_decode(json_encode($dataStatuses))->logbookStatuses;
                     return view('guru.logbook.edit', compact('logbook','logbookStatuses'));            
-                }else {
-            return view('admin.logbook.edit', compact(
-                'logbook','logbookStatuses'
-            ));
+            }else if  ($auth->level_id == 3) {
+                $dataStudentLogbook = Http::withHeaders([
+                    'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
+                    'ContentType' => 'application/json',
+                    'Accept' => 'application/json',
+                    ])->get('http://192.168.43.202:8000/api/logbooks/'.$id.'/edit')->json();
+                    // dd($dataStudentLogbook);
+                    $logbook = json_decode(json_encode($dataStudentLogbook))->logbook;
+                    return view('siswa.logbook.edit', compact('logbook'));            
+                }
         }
-    }
+    
+
 
     public function update(Request $request, $id)
     {

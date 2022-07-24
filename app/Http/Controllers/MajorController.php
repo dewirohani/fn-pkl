@@ -21,7 +21,7 @@ class MajorController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api'.'/majors')->json();
+            ])->get('http://192.168.43.202:8000/api'.'/majors')->json();
             
             $majors = json_decode(json_encode($data))->majors;
         if($request->ajax()){
@@ -89,7 +89,7 @@ class MajorController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/majors/'.$id.'/edit')->json();
+            ])->get('http://192.168.43.202:8000/api/majors/'.$id.'/edit')->json();
             $major = json_decode(json_encode($data))->major;
             // dd($major);
         

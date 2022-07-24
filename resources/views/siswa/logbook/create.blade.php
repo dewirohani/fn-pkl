@@ -42,7 +42,7 @@ $user = \Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/user')->json();
+            ])->get('http://192.168.43.202:8000/api/user')->json();
         $auth = json_decode(json_encode($user))->data;
             </script> --}}
         @endsection

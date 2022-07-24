@@ -14,14 +14,14 @@ class InternshipReportController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/user')->json();
+            ])->get('http://192.168.43.202:8000/api/user')->json();
         $auth = json_decode(json_encode($user))->data;
         if($auth->level_id == 1){
         $data = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api'.'/reports')->json();            
+            ])->get('http://192.168.43.202:8000/api'.'/reports')->json();            
             $internshipReports = json_decode(json_encode($data))->internshipReports;
         if($request->ajax()){
             return DataTables::of($internshipReports)                          
@@ -58,7 +58,7 @@ class InternshipReportController extends Controller
                     'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                     'ContentType' => 'application/json',
                     'Accept' => 'application/json',
-                    ])->get('http://localhost/pa/backend/public/api'.'/reports')->json();            
+                    ])->get('http://192.168.43.202:8000/api'.'/reports')->json();            
                     $internshipReports = json_decode(json_encode($data))->internshipReports;
                 if($request->ajax()){
                     return DataTables::of($internshipReports)                          
@@ -93,7 +93,7 @@ class InternshipReportController extends Controller
                     'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                     'ContentType' => 'application/json',
                     'Accept' => 'application/json',
-                    ])->get('http://localhost/pa/backend/public/api'.'/reports')->json();   
+                    ])->get('http://192.168.43.202:8000/api'.'/reports')->json();   
                     // dd($data);         
                     $internshipReports = json_decode(json_encode($data))->internshipReports;
                     return view('siswa.report.index', compact('internshipReports'));
@@ -109,13 +109,13 @@ class InternshipReportController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/user')->json();
+            ])->get('http://192.168.43.202:8000/api/user')->json();
         $auth = json_decode(json_encode($user))->data;
         $dataStudent = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/students')->json();
+            ])->get('http://192.168.43.202:8000/api/students')->json();
             $students = json_decode(json_encode($dataStudent))->students;
             if ($auth->level_id == 1) {
                 return view('admin.report.create', compact('students'));            
@@ -141,21 +141,21 @@ class InternshipReportController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/user')->json();
+            ])->get('http://192.168.43.202:8000/api/user')->json();
         $auth = json_decode(json_encode($user))->data;
         if($auth->level_id == 1){
         $data = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/reports/'.$id.'/edit')->json();
+            ])->get('http://192.168.43.202:8000/api/reports/'.$id.'/edit')->json();
             // dd($data);
             $internshipReport = json_decode(json_encode($data))->internshipReport;
             $dataStatuses = Http::withHeaders([
                 'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                 'ContentType' => 'application/json',
                 'Accept' => 'application/json',
-                ])->get('http://localhost/pa/backend/public/api/report-statuses')->json();
+                ])->get('http://192.168.43.202:8000/api/report-statuses')->json();
                 // dd($dataStatuses);
                 $internshipReportStatuses = json_decode(json_encode($dataStatuses))->internshipReportStatuses;
             return view('admin.report.edit', compact('internshipReport','internshipReportStatuses'));
@@ -164,14 +164,14 @@ class InternshipReportController extends Controller
                 'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                 'ContentType' => 'application/json',
                 'Accept' => 'application/json',
-                ])->get('http://localhost/pa/backend/public/api/reports/'.$id.'/edit')->json();
+                ])->get('http://192.168.43.202:8000/api/reports/'.$id.'/edit')->json();
                 // dd($data);
                 $internshipReport = json_decode(json_encode($data))->internshipReport;
                 $dataStatuses = Http::withHeaders([
                     'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                     'ContentType' => 'application/json',
                     'Accept' => 'application/json',
-                    ])->get('http://localhost/pa/backend/public/api/report-statuses')->json();
+                    ])->get('http://192.168.43.202:8000/api/report-statuses')->json();
                     // dd($dataStatuses);
                     $internshipReportStatuses = json_decode(json_encode($dataStatuses))->internshipReportStatuses;
                 return view('guru.report.edit', compact('internshipReport','internshipReportStatuses'));

@@ -18,7 +18,7 @@
         event.preventDefault();
         let formData = new FormData(this);
                 $.ajax({
-                    url: "http://localhost/pa/backend/public/api/majors",
+                    url: "http://192.168.43.202:8000/api/majors",
                     type: "POST",
                     headers: {
                         'Accept':'*/*',

@@ -19,13 +19,13 @@ class InternshipPlacementController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/user')->json();
+            ])->get('http://192.168.43.202:8000/api/user')->json();
         $auth = json_decode(json_encode($user))->data;
         $data = Http::withHeaders([
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api'.'/internship-placements')->json();
+            ])->get('http://192.168.43.202:8000/api'.'/internship-placements')->json();
             
             $internshipPlacements = json_decode(json_encode($data))->internshipPlacements;
         if($request->ajax()){
@@ -68,7 +68,7 @@ class InternshipPlacementController extends Controller
                     'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
                     'ContentType' => 'application/json',
                     'Accept' => 'application/json',
-                    ])->get('http://localhost/pa/backend/public/api'.'/internship-placements')->json();
+                    ])->get('http://192.168.43.202:8000/api'.'/internship-placements')->json();
                     // dd($data);
                     
                     $internshipPlacements = json_decode(json_encode($data))->internshipPlacements;

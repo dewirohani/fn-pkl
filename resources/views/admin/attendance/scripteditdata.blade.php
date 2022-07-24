@@ -8,7 +8,7 @@
             // let id = e.getAttribute('data-id');
             let formData = new FormData(this);
                 $.ajax({
-                    url: "http://localhost/pa/backend/public/api/attendances/"+id,
+                    url: "http://192.168.43.202:8000/api/attendances/"+id,
                     type: "POST",
                     headers: {
                         'Accept':'*/*',

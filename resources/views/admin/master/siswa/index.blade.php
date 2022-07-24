@@ -17,6 +17,8 @@
                       <tr>
                         <th>#</th>
                         <th>NIS</th>
+                        <th>Username</th>
+                        <th>Email</th>
                         <th>Nama</th>
                         <th>Kelas</th>
                         <th>Jurusan</th>
@@ -33,6 +35,8 @@
                     <tfoot>
                         <th>#</th>
                         <th>NIS</th>
+                        <th>Username</th>
+                        <th>Email</th>
                         <th>Nama</th>
                         <th>Kelas</th>
                         <th>Jurusan</th>
@@ -79,6 +83,12 @@
                 },
                 {
                     data: 'nis',
+                },
+                {
+                    data: 'username',
+                },
+                {
+                    data: 'email',
                 },
                 {
                     data: 'name',

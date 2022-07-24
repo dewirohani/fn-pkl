@@ -19,7 +19,8 @@ class StudentController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api'.'/students')->json();
+            ])->get('http://192.168.43.202:8000/api'.'/students')->json();
+            // dd($data);
             $students = json_decode(json_encode($data))->students;
         if($request->ajax()){
             return DataTables::of($students)
@@ -28,6 +29,12 @@ class StudentController extends Controller
                             })
                             ->addColumn('name', function($row){
                                 return $row->name;
+                            })
+                            ->addColumn('username', function($row){
+                                return $row->user->username;
+                            })
+                            ->addColumn('email', function($row){
+                                return $row->user->email;
                             })
                             ->addColumn('grade_id', function($row){
                                 return $row->grade->name;
@@ -84,7 +91,7 @@ class StudentController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/grades')->json();
+            ])->get('http://192.168.43.202:8000/api/grades')->json();
             $grades = json_decode(json_encode($data))->grades;
         return view('admin.master.siswa.create', compact('grades'));
     }
@@ -123,7 +130,7 @@ class StudentController extends Controller
             'Authorization' => 'Bearer '.substr($request->Header('cookie'),'6' , strpos(substr($request->Header('cookie'),'6'), ";")),
             'ContentType' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('http://localhost/pa/backend/public/api/students/'.$id.'/edit')->json();
+            ])->get('http://192.168.43.202:8000/api/students/'.$id.'/edit')->json();
             $student = json_decode(json_encode($data))->student;
             // dd($student);
         

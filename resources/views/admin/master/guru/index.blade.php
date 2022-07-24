@@ -17,6 +17,8 @@
                       <tr>
                         <th>#</th>
                         <th>NIP</th>
+                        <th>Username</th>
+                        <th>Email</th>
                         <th>Nama</th>                      
                         <th>Alamat</th>
                         <th>Tempat Lahir</th>
@@ -30,6 +32,8 @@
                     <tfoot>
                         <th>#</th>
                         <th>NIP</th>
+                        <th>Username</th>
+                        <th>Email</th>
                         <th>Nama</th>                        
                         <th>Alamat</th>
                         <th>Tempat Lahir</th>
@@ -73,6 +77,12 @@
                 },
                 {
                     data: 'nip',
+                },
+                {
+                    data: 'username',
+                },
+                {
+                    data: 'email',
                 },
                 {
                     data: 'name',

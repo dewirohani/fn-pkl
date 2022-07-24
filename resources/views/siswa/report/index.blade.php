@@ -5,7 +5,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-dark">Logbook</h6>
+                        <h6 class="m-0 font-weight-bold text-dark">Laporan</h6>
                         <a href="{{ route('reports-siswa.create') }}">
                           <button class="btn btn-success mr-2" style="float: right"><i class="fa fa-plus">Tambah Laporan</i></button>
                         </a>
